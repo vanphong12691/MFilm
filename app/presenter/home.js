@@ -80,3 +80,12 @@ export function getHListFilm(url, component){
             .catch(reject);
     });
 }
+export function getMostViewFilm(component){
+    return new Promise(function(resolve,reject){
+        Global.NetworkHelper.requestGetApi(Global.DefineApi.MOST_VIEW_FILM_API,component)
+            .then((responseData)=>{
+                resolve(responseData);
+            })
+            .catch(reject);
+    });
+}

@@ -21,9 +21,10 @@ var SideMenu = require('react-native-side-menu');
 var Menu = require('../menu/menu');
 var HomeSlider = require('../slider/slider');
 var Hot = require('../hot/hot');
+var MostView = require('../mostview/mostview');
 var RefreshInfiniteListView = require('@remobile/react-native-refresh-infinite-listview');
 var Orientation = require('react-native-orientation');
-var ScrollableTabView = require('react-native-scrollable-tab-view');
+import ScrollableTabView, {ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import CustomTabBar from './CustomTabBar';
 import Icon from 'react-native-vector-icons/Ionicons';
 class Page extends Component
@@ -38,6 +39,7 @@ class Page extends Component
             hot: [],
             rap: [],
             film: [[],[],[]],
+            mostView: {d:[], w:[], m:[]},
             id: 0,
             type: 0,
             refreshing: false,
@@ -75,6 +77,18 @@ class Page extends Component
                 if(responseData.data.length > 0){
                     this.setState({
                         rap:responseData.data
+                    })
+                }
+            }).catch(error=>{
+                alert('Error change Tabe');
+            });
+        }
+
+        if(item.i==2){
+            HomePresenter.getMostViewFilm(this).then(responseData=>{
+                if(responseData){
+                    this.setState({
+                        mostView:responseData.data
                     })
                 }
             }).catch(error=>{
@@ -179,6 +193,7 @@ class Page extends Component
                                 </TouchableHighlight>
                             </View>
 
+                            <MostView onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.mostView}></MostView>
 
 
                         </View>
