@@ -36,6 +36,7 @@ class Page extends Component
         this.state = {
             slider: [],
             hot: [],
+            rap: [],
             film: [[],[],[]],
             id: 0,
             type: 0,
@@ -65,6 +66,22 @@ class Page extends Component
             id:Global.Constants.SEARCH_ID,
         });
     }
+    _changeTab(item){
+        if(item.i==3){
+            let url ="?order=publish_date&cat_id=56";
+            HomePresenter.getListFilm(url,this).then(responseData=>{
+                this.totalPage = responseData.max;
+
+                if(responseData.data.length > 0){
+                    this.setState({
+                        rap:responseData.data
+                    })
+                }
+            }).catch(error=>{
+                alert('Error change Tabe');
+            });
+        }
+    }
 
     render(){
 
@@ -72,7 +89,7 @@ class Page extends Component
                 <ScrollableTabView
                     removeClippedSubviews={false}
                     style={{ backgroundColor: 'white' }}
-
+                    onChangeTab={(item) => this._changeTab(item)}
                     tabBarPosition={'bottom'}
                     locked = {true}
                     renderTabBar={() => <CustomTabBar />}>
@@ -179,7 +196,7 @@ class Page extends Component
                                     <Icon  name="ios-search" size={25} color="#fff" />
                                 </TouchableHighlight>
                             </View>
-                            <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.hot}></Hot>
+                            <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.rap}></Hot>
                         </View>
                     </View>
                     <View tabLabel="ios-menu" style={styles.tabView}>
