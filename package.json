@@ -1,0 +1,33 @@
+{
+  "name": "MFilm",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@remobile/react-native-refresh-infinite-listview": "^1.0.4",
+    "axios": "^0.15.2",
+    "react": "15.4.1",
+    "react-native": "0.38.0",
+    "react-native-button": "^1.7.1",
+    "react-native-keep-awake": "^1.0.7",
+    "react-native-orientation": "yamill/react-native-orientation",
+    "react-native-scrollable-tab-view": "^0.7.0",
+    "react-native-side-menu": "^0.20.1",
+    "react-native-slider": "^0.9.1",
+    "react-native-swiper": "^1.5.4",
+    "react-native-vector-icons": "^3.0.0",
+    "react-native-video": "^0.9.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "devDependencies": {
+    "babel-jest": "17.0.2",
+    "babel-preset-react-native": "1.9.0",
+    "jest": "17.0.3",
+    "react-test-renderer": "15.4.1"
+  }
+}
