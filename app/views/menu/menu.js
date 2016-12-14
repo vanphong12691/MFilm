@@ -17,12 +17,6 @@ const window = Dimensions.get('window');
 const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 var HomePresenter = require('../../presenter/home');
 const styles = StyleSheet.create({
-    menu: {
-        flex: 1,
-        backgroundColor: '#151515',
-        paddingLeft: 20,
-        paddingTop: 5
-    },
     menuScroll: {
         flex: 1,
         width: window.width,
@@ -56,7 +50,7 @@ const styles = StyleSheet.create({
 class Menu extends Component {
     static propTypes = {
         onItemSelected: React.PropTypes.func,
-        isScroll: React.PropTypes.boolean
+        isScroll: React.PropTypes.bool
     };
 
     constructor(props){
@@ -86,7 +80,7 @@ class Menu extends Component {
     render() {
         return (
           <View>
-            <ScrollView scrollsToTop={false} style={[styles.menu, !this.props.isScroll && styles.menuScroll]}>
+            <ScrollView scrollsToTop={false} style={styles.menuScroll}>
                 <Text
                     onPress={() => this._onPress('About')}
                     style={styles.item}>

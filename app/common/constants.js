@@ -26,3 +26,4 @@ exports.CHAPPER_ID = 3;
 exports.PLAY_ID = 4;
 exports.PAGE_ID = 5;
 exports.H_PAGE_ID = 6;
+exports.SEARCH_ID = 7;

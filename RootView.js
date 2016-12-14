@@ -17,6 +17,7 @@ var DetailView = require('./app/views/detail/index');
 var ChapperView = require('./app/views/chapper/index');
 var PlayView = require('./app/views/player/player');
 var HPageView = require('./app/views/phome/phome');
+var SearchView = require('./app/views/search/search');
 var Global = require('./app/common/global');
 
 class RootView extends Component {
@@ -51,6 +52,9 @@ class RootView extends Component {
 
       case Global.Constants.H_PAGE_ID:
         return (<HPageView navigator={navigator} data={route.data}/>);
+
+      case Global.Constants.SEARCH_ID:
+        return (<SearchView navigator={navigator}/>);
       default:
     }
   }

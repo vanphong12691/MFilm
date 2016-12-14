@@ -22,8 +22,7 @@ const { width } = Dimensions.get('window')
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.05)',
-        height: 195,
+        height: 194,
     },
     dot: {
         backgroundColor: 'rgba(255,255,255,.3)',

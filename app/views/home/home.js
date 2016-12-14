@@ -40,21 +40,29 @@ class Page extends Component
             id: 0,
             type: 0,
             refreshing: false,
+            loaded: false
         }
     }
 
 
-    componentWillMount(){
+    componentDidMount(){
 
         HomePresenter.getHomeInformation(this).then(responseData=>{
            this.setState({
                slider: responseData['slider'],
                hot: responseData['hot'],
-               film: responseData['film']
+               film: responseData['film'],
+               loaded: true
            })
         }).catch(error=>{
             alert(1);
 
+        });
+    }
+
+    onPressSearch(){
+        this.props.navigator.push({
+            id:Global.Constants.SEARCH_ID,
         });
     }
 
@@ -68,80 +76,126 @@ class Page extends Component
                     tabBarPosition={'bottom'}
                     locked = {true}
                     renderTabBar={() => <CustomTabBar />}>
-                    <ScrollView tabLabel="ios-home" style={styles.tabView}>
+                    <View tabLabel="ios-home" style={styles.tabView}>
                         <View style={styles.card}>
-                            <HomeSlider onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.slider}/>
-                            <View style={{height:40, flexDirection:"row", backgroundColor: "#34495e"}}>
-                                <View style={{backgroundColor: "#34495e",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
-                                    <TouchableHighlight underlayColor="transparent"  >
-                                        <Icon  name="ios-list" size={30} color="#fff" />
-                                    </TouchableHighlight>
-                                </View>
-                                <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>Phim bộ mới cập nhật</Text></View>
-                                <View style={{backgroundColor: "#34495e", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
-                                    <TouchableHighlight underlayColor="transparent" onPress={this._onPressList.bind(this,0)} >
-                                        <Icon  name="ios-arrow-dropright" size={30} color="#fff" />
-                                    </TouchableHighlight>
-                                </View>
+                            <View style={{height: 40, justifyContent: 'center',  backgroundColor: '#0288D1', flexDirection: 'row'}}>
+                                <TouchableHighlight underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-home" size={25} color="#fff" />
+                                </TouchableHighlight>
+                                <View style={{flex:1, justifyContent: 'center'}}><Text style={{color: 'white', fontSize: 16}} >{'TRANG CHỦ'}</Text></View>
+                                <TouchableHighlight onPress={this.onPressSearch.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-search" size={25} color="#fff" />
+                                </TouchableHighlight>
                             </View>
-                            <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.film[0]}></Hot>
-                            <View style={{height:40, flexDirection:"row", backgroundColor: "#34495e"}}>
-                                <View style={{backgroundColor: "#34495e",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
-                                    <TouchableHighlight underlayColor="transparent"  >
-                                        <Icon  name="ios-list" size={30} color="#fff" />
-                                    </TouchableHighlight>
-                                </View>
-                                <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>Phim lẻ mới cập nhật</Text></View>
-                                <View style={{backgroundColor: "#34495e", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
-                                    <TouchableHighlight underlayColor="transparent" onPress={this._onPressList.bind(this,1)} >
-                                        <Icon  name="ios-arrow-dropright" size={30} color="#fff" />
-                                    </TouchableHighlight>
-                                </View>
-                            </View>
-                            <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.film[1]}></Hot>
-                            <View style={{height:40, flexDirection:"row", backgroundColor: "#34495e"}}>
-                                <View style={{backgroundColor: "#34495e",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
-                                    <TouchableHighlight underlayColor="transparent"  >
-                                        <Icon  name="ios-list" size={30} color="#fff" />
-                                    </TouchableHighlight>
-                                </View>
-                                <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>Phim hoạt hình</Text></View>
-                                <View style={{backgroundColor: "#34495e", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
-                                    <TouchableHighlight underlayColor="transparent" onPress={this._onPressList.bind(this,2)} >
-                                        <Icon  name="ios-arrow-dropright" size={30} color="#fff" />
-                                    </TouchableHighlight>
-                                </View>
-                            </View>
-                            <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.film[2]}></Hot>
 
-
+                            <ScrollView>
+                                <HomeSlider onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.slider}/>
+                                {this.state.loaded && <View style={{height:40, flexDirection:"row", backgroundColor: "#03A9F4"}}>
+                                    <View style={{backgroundColor: "#03A9F4",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
+                                        <TouchableHighlight underlayColor="transparent"  >
+                                            <Icon  name="ios-list" size={30} color="#fff" />
+                                        </TouchableHighlight>
+                                    </View>
+                                    <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>Phim bộ mới cập nhật</Text></View>
+                                    <View style={{backgroundColor: "#03A9F4", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
+                                        <TouchableHighlight underlayColor="transparent" onPress={this._onPressList.bind(this,0)} >
+                                            <Icon  name="ios-arrow-dropright" size={30} color="#fff" />
+                                        </TouchableHighlight>
+                                    </View>
+                                </View>}
+                                <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.film[0]}></Hot>
+                                {this.state.loaded &&<View style={{height:40, flexDirection:"row", backgroundColor: "#2980b9"}}>
+                                    <View style={{backgroundColor: "#2980b9",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
+                                        <TouchableHighlight underlayColor="transparent"  >
+                                            <Icon  name="ios-list" size={30} color="#fff" />
+                                        </TouchableHighlight>
+                                    </View>
+                                    <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>Phim lẻ mới cập nhật</Text></View>
+                                    <View style={{backgroundColor: "#2980b9", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
+                                        <TouchableHighlight underlayColor="transparent" onPress={this._onPressList.bind(this,1)} >
+                                            <Icon  name="ios-arrow-dropright" size={30} color="#fff" />
+                                        </TouchableHighlight>
+                                    </View>
+                                </View>}
+                                <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.film[1]}></Hot>
+                                {this.state.loaded &&<View style={{height:40, flexDirection:"row", backgroundColor: "#2980b9"}}>
+                                    <View style={{backgroundColor: "#2980b9",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
+                                        <TouchableHighlight underlayColor="transparent"  >
+                                            <Icon  name="ios-list" size={30} color="#fff" />
+                                        </TouchableHighlight>
+                                    </View>
+                                    <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>Phim hoạt hình</Text></View>
+                                    <View style={{backgroundColor: "#2980b9", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
+                                        <TouchableHighlight underlayColor="transparent" onPress={this._onPressList.bind(this,2)} >
+                                            <Icon  name="ios-arrow-dropright" size={30} color="#fff" />
+                                        </TouchableHighlight>
+                                    </View>
+                                </View>}
+                                <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.film[2]}></Hot>
+                            </ScrollView>
                         </View>
-                    </ScrollView>
+                    </View>
 
-                    <ScrollView tabLabel="ios-timer" style={styles.tabView}>
+                    <View tabLabel="ios-flame" style={styles.tabView}>
                         <View style={styles.card}>
+                            <View style={{height: 40, justifyContent: 'center',  backgroundColor: '#0288D1', flexDirection: 'row'}}>
+                                <TouchableHighlight underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-flame" size={25} color="#fff" />
+                                </TouchableHighlight>
+                                <View style={{flex:1, justifyContent: 'center'}}><Text style={{color: 'white', fontSize: 16}} >{'ĐANG HOT'}</Text></View>
+                                <TouchableHighlight onPress={this.onPressSearch.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-search" size={25} color="#fff" />
+                                </TouchableHighlight>
+                            </View>
                             <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.hot}></Hot>
                         </View>
-                    </ScrollView>
-                    <ScrollView tabLabel="ios-heart" style={styles.tabView}>
+                    </View>
+                    <View tabLabel="ios-ribbon" style={styles.tabView}>
                         <View style={styles.card}>
-
+                            <View style={{height: 40, justifyContent: 'center',  backgroundColor: '#0288D1', flexDirection: 'row'}}>
+                                <TouchableHighlight underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-ribbon" size={25} color="#fff" />
+                                </TouchableHighlight>
+                                <View style={{flex:1, justifyContent: 'center'}}><Text style={{color: 'white', fontSize: 16}} >{'XEM NHIỀU'}</Text></View>
+                                <TouchableHighlight onPress={this.onPressSearch.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-search" size={25} color="#fff" />
+                                </TouchableHighlight>
+                            </View>
 
 
 
                         </View>
-                    </ScrollView>
+                    </View>
 
 
-                    <ScrollView tabLabel="ios-search" style={styles.tabView}>
+                    <View tabLabel="ios-film" style={styles.tabView}>
                         <View style={styles.card}>
+                            <View style={{height: 40, justifyContent: 'center',  backgroundColor: '#0288D1', flexDirection: 'row'}}>
+                                <TouchableHighlight underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-film" size={25} color="#fff" />
+                                </TouchableHighlight>
+                                <View style={{flex:1, justifyContent: 'center'}}><Text style={{color: 'white', fontSize: 16}} >{'PHIM CHIẾU RẠP MỚI NHẤT'}</Text></View>
+                                <TouchableHighlight onPress={this.onPressSearch.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-search" size={25} color="#fff" />
+                                </TouchableHighlight>
+                            </View>
+                            <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.hot}></Hot>
                         </View>
-                    </ScrollView>
-                    <ScrollView tabLabel="ios-menu" style={styles.tabView}>
+                    </View>
+                    <View tabLabel="ios-menu" style={styles.tabView}>
                         <View style={styles.card}>
-                            <Menu id={this.state.id} isScroll = {true} type={this.state.type} onItemSelected={this.onMenuOpen.bind(this)} />
+                            <View style={{height: 40, justifyContent: 'center',  backgroundColor: '#0288D1', flexDirection: 'row'}}>
+                                <TouchableHighlight underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-menu" size={25} color="#fff" />
+                                </TouchableHighlight>
+                                <View style={{flex:1, justifyContent: 'center'}}><Text style={{color: 'white', fontSize: 16}} >{'KHÁC'}</Text></View>
+                                <TouchableHighlight onPress={this.onPressSearch.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-search" size={25} color="#fff" />
+                                </TouchableHighlight>
+                            </View>
+                            <Menu id={this.state.id} type={this.state.type} onItemSelected={this.onMenuOpen.bind(this)} />
                         </View>
-                    </ScrollView>
+                    </View>
 
 
 

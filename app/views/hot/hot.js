@@ -26,7 +26,7 @@ class Hot extends Component
         this.totalPage = 1;
     }
 
-    propTypes = {
+    static propTypes = {
         onItemSelected: React.PropTypes.func,
         data: React.PropTypes.array
     };
