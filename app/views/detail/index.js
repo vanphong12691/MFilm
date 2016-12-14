@@ -15,7 +15,8 @@ import {
     Button,
     Linking,
     ListView,
-    ActivityIndicator
+    ActivityIndicator,
+    TouchableHighlight
 }from 'react-native';
 var styles = require('./index_style');
 var Global = require('../../common/global');
@@ -23,7 +24,7 @@ var Constant = require('../../common/constants');
 var HomePresenter = require('../../presenter/home');
 var Header = require('../../component/header/index');
 var ChapperCell = require('../cell/chapper/index');
-
+import Icon from 'react-native-vector-icons/Ionicons';
 class HomeCell extends Component {
 
     constructor(props){
@@ -55,7 +56,14 @@ class HomeCell extends Component {
     render() {
         return (
             <View style={{height: Global.Constants.HEIGHT_SCREEN}}>
-                <View style={{height: 50}}><Header title={this.props.data.vi}/></View>
+                <View style={{height:40, flexDirection:"row"}}>
+                    <View style={{backgroundColor: "#34495e",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
+                        <TouchableHighlight underlayColor="transparent"  onPress={this.onBack.bind(this)}>
+                            <Icon  name="ios-arrow-back" size={25} color="#fff" />
+                        </TouchableHighlight>
+                    </View>
+                    <View style={{flex: 1}}><Header title={this.props.data.vi}/></View>
+                </View>
                 <View style={{flex: 1}}>
                     <View style={{flex: 0.7, justifyContent: 'center',alignItems: 'center',}}>
                         <Image style={{width: Constant.WIDTH_SCREEN-50, height: Constant.WIDTH_SCREEN-50, borderWidth: 1, borderColor: "#ecf0f1", borderRadius: Constant.WIDTH_SCREEN/2-25}} source={{uri: this.props.data.picture}}></Image>
@@ -104,6 +112,10 @@ class HomeCell extends Component {
                 </View>}
             </View>
         )
+    }
+
+    onBack(){
+        this.props.navigator.pop();
     }
     playFilm(){
         if(this.state.information.showing.startsWith("Tập") || (this.state.information.showing.startsWith("Full") && !this.state.information.showing.startsWith("Full HD"))){
