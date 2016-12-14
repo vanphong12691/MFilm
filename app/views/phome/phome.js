@@ -8,7 +8,8 @@ import {
     ScrollView,
     Image,
     TouchableHighlight,
-    RefreshControl
+    RefreshControl,
+    Keyboard
 }from 'react-native';
 var HomePresenter = require('../../presenter/home');
 var Global = require('../../common/global');
@@ -61,6 +62,7 @@ class PageHome extends Component
     }
 
     componentDidMount(){
+        Keyboard.dismiss();
         let url = '?type='+this.props.data.type;
         HomePresenter.getHListFilm(url,this).then(responseData=>{
             this.totalPage = responseData.max;

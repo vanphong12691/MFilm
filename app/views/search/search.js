@@ -9,7 +9,8 @@ import {
     Image,
     TouchableHighlight,
     RefreshControl,
-    TextInput
+    TextInput,
+    Keyboard
 }from 'react-native';
 var Global = require('../../common/global');
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,7 +20,8 @@ class Search extends Component
     constructor(props) {
         super(props);
         this.state={
-            search: ''
+            search: '',
+            focus: true,
         }
     }
 
@@ -50,7 +52,7 @@ class Search extends Component
         this.props.navigator.pop();
     }
     findFilm(){
-        let data = {
+       let data = {
             type : "tim-kiem.html?q="+this.state.search,
             title: 'Tìm kiếm: '+this.state.search
         }
@@ -59,6 +61,10 @@ class Search extends Component
             id:Global.Constants.H_PAGE_ID,
             data: data
         });
+    }
+
+    componentWillUnmount () {
+       Keyboard.dismiss();
     }
 
 
