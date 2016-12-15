@@ -30,7 +30,7 @@ class MostView extends Component
 
     static propTypes = {
         onItemSelected: React.PropTypes.func,
-        data: Object
+        data: React.PropTypes.object
     };
     componentDidMount(){
     }

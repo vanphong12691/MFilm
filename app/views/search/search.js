@@ -37,7 +37,7 @@ class Search extends Component
                     <View style={{flex: 1}}>
                         <Makiko
                             underlineColorAndroid="transparent"
-                            style={{height: 40, justifyContent: 'center'}}
+                            style={{height: 40, justifyContent: 'center', backgroundColor:"transparent"}}
                             label={'Tìm kiếm phim, diễn viên, quốc gia...'}
                             iconClass={FontAwesomeIcon}
                             iconName={'comment'}
