@@ -14,6 +14,8 @@ import {
 }from 'react-native';
 var Global = require('../../common/global');
 import Icon from 'react-native-vector-icons/Ionicons';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { Makiko } from 'react-native-textinput-effects';
 
 class Search extends Component
 {
@@ -27,24 +29,32 @@ class Search extends Component
 
     render(){
         return (<View>
-                <View style={{flex:1,height: 50, padding: 5, justifyContent:'center', alignItems:'center', backgroundColor:'rgb(96, 125, 139)', flexDirection:'row'}}>
+                <View style={{flex:1,height: 40, justifyContent:'center', alignItems:'center', backgroundColor:'#0288D1', flexDirection:'row'}}>
 
-                     <TouchableHighlight onPress={this._onBack.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                     <TouchableHighlight onPress={this._onBack.bind(this)} underlayColor="transparent" style={{height: 30, width: 40,alignItems: 'center', justifyContent: 'center'}} >
                             <Icon  name="ios-arrow-back" size={25} color="#fff" />
                       </TouchableHighlight>
-                    <TextInput
-                        style={{flex: 1}}
-                        autoFocus={true}
-                        returnKeyType={'search'}
-                        onSubmitEditing={this.findFilm.bind(this)}
-                        placeholder={'Tìm kiếm phim, diễn viên, quốc gia...'}
-                        onChangeText={(text) => this.setState({search:text})}
-                        value={this.state.text}
-                    />
-                    <TouchableHighlight onPress={this.findFilm.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                    <View style={{flex: 1}}>
+                        <Makiko
+                            underlineColorAndroid="transparent"
+                            style={{height: 40, justifyContent: 'center'}}
+                            label={'Tìm kiếm phim, diễn viên, quốc gia...'}
+                            iconClass={FontAwesomeIcon}
+                            iconName={'comment'}
+                            iconColor={'white'}
+                            autoFocus={true}
+                            returnKeyType={'search'}
+                            onSubmitEditing={this.findFilm.bind(this)}
+                            onChangeText={(text) => this.setState({search:text})}
+                            inputStyle={{ color: '#0288D1' }}
+                        />
+                    </View>
+                    <TouchableHighlight onPress={this.findFilm.bind(this)} underlayColor="transparent" style={{height: 30, width: 40,alignItems: 'center', justifyContent: 'center'}} >
                         <Icon  name="ios-search" size={25} color="#fff" />
                     </TouchableHighlight>
                 </View>
+
+
             </View>
         )
     }
