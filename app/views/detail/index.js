@@ -131,62 +131,6 @@ class HomeCell extends Component {
                     />
                 </View>}
                 </View>
-            /*<View style={{height: Global.Constants.HEIGHT_SCREEN}}>
-                <View style={{height:40, flexDirection:"row"}}>
-                    <View style={{backgroundColor: "#34495e",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
-                        <TouchableHighlight underlayColor="transparent"  onPress={this.onBack.bind(this)}>
-                            <Icon  name="ios-arrow-back" size={25} color="#fff" />
-                        </TouchableHighlight>
-                    </View>
-                    <View style={{flex: 1}}><Header title={this.props.data.vi}/></View>
-                </View>
-                <View style={{flex: 1}}>
-                    <View style={{flex: 0.7, justifyContent: 'center',alignItems: 'center',}}>
-                        <Image style={{width: Constant.WIDTH_SCREEN-50, height: Constant.WIDTH_SCREEN-50, borderWidth: 1, borderColor: "#ecf0f1", borderRadius: Constant.WIDTH_SCREEN/2-25}} source={{uri: this.props.data.picture}}></Image>
-                    </View>
-                    {!this.state.watched && <View style={{flex: 0.20, padding: 1}}>
-
-                        <View style={{flex: 0.25, paddingLeft: 20, justifyContent: 'center'}}>
-                            <Text style={{fontSize: 16, color: 'white'}}>{this.props.data.en}</Text>
-                        </View>
-
-                        <View style={{flex: 0.25, paddingLeft: 20, justifyContent: 'center'}}>
-                            <Text style={{fontSize: 16, color: 'white'}}>{"Đang phát: "}{this.state.information.showing}</Text>
-                        </View>
-                        <View style={{flex: 0.25, paddingLeft: 20, justifyContent: 'center'}}>
-                            <Text style={{fontSize: 16, color: 'white'}}>{"Sắp chiếu: "}{this.state.information.preShow}</Text>
-                        </View>
-
-
-                    </View>
-                    }
-                    {this.state.watched && <View style={{flex: 0.20, padding: 1}}>
-                        <ListView
-                            pageSize = {100}
-                            contentContainerStyle={styles.list}
-                            dataSource={this.state.dataSource}
-                            renderRow={this._renderRow.bind(this)}
-                        />
-
-                        </View>
-                    }
-                    <View style={{flex: 0.1,  justifyContent: 'center',alignItems: 'center'}}>
-                        {!this.state.watched && <TouchableWithoutFeedback onPress={!this.state.loading&&this.playFilm.bind(this)} style={{width: 50, height: 100}}>
-                            <View>
-                                <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold', backgroundColor:"#e74c3c", paddingLeft: 10, paddingRight: 10, paddingBottom: 2}}>{"XEM PHIM"}</Text>
-                            </View>
-
-                        </TouchableWithoutFeedback>}
-                        {this.state.watched && <Text>{'Chọn tập để xem'}</Text>}
-                    </View>
-                </View>
-                {this.state.loading&&<View style={styles.centering}>
-                   <ActivityIndicator
-                        animating = {true}
-                        size="large"
-                    />
-                </View>}
-            </View>*/
         )
     }
     convertArray(data){
