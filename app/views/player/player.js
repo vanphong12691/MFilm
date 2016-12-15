@@ -88,17 +88,6 @@ class Player extends Component {
   }
 
   goBackward(){
-   /* if(this.state.currentTime < 3 && this.state.songIndex !== 0 ){
-      this.setState({
-        songIndex: this.state.songIndex - 1,
-        currentTime: 0,
-      });
-    } else {
-      this.refs.video.seek(0);
-      this.setState({
-        currentTime: 0,
-      });
-    }*/
     let current = this.state.current;
     if(current> 1){
       HomePresenter.getLink(this.props.pages[current-2].link,this.props.film_id,this).then(responseData=>{
@@ -154,7 +143,7 @@ class Player extends Component {
   }
 
   onEnd(){
-    this.setState({ playing: false });
+    this.goForward();
   }
   _onClickVideo(){
     this.setState({
@@ -227,7 +216,7 @@ class Player extends Component {
                  resizeMode={this.state.resizeMode}
                  repeat={false}/>
           </TouchableWithoutFeedback>
-          <View style={{
+          {this.state.showingController &&<View style={{
             position: 'absolute',
             top: 0,
             left: 0,
@@ -236,7 +225,7 @@ class Player extends Component {
           }}>
             <Text style={{fontSize: 20, color: 'white'}} numberOfLines={1} ellipsizeMode={'tail'}>Tập {this.state.current}/{this.props.max}</Text>
 
-          </View>
+          </View>}
           { this.state.showingController && <View style={{ bottom:0, left: 0, right: 0, alignItems:"center", position: 'absolute'}}>
           <View style={ {width: this.state.widthSlider} }>
             <Slider
