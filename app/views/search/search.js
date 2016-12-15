@@ -28,7 +28,7 @@ class Search extends Component
     }
 
     render(){
-        return (<View>
+        return (
                 <View style={{flex:1,height: 40, justifyContent:'center', alignItems:'center', backgroundColor:'#0288D1', flexDirection:'row'}}>
 
                      <TouchableHighlight onPress={this._onBack.bind(this)} underlayColor="transparent" style={{height: 30, width: 40,alignItems: 'center', justifyContent: 'center'}} >
@@ -54,8 +54,6 @@ class Search extends Component
                     </TouchableHighlight>
                 </View>
 
-
-            </View>
         )
     }
     _onBack(){
