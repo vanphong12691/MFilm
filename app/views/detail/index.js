@@ -95,11 +95,11 @@ class HomeCell extends Component {
                     <View style={{backgroundColor :'green', alignItems: 'center'}}>
                         {!this.state.watched && <TouchableWithoutFeedback onPress={!this.state.loading&&this.playFilm.bind(this)} style={{width: 50, height: 100}}>
                             <View>
-                                <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold', padding:10}}>{"XEM PHIM"}</Text>
+                                <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold', padding:5}}>{"XEM PHIM"}</Text>
                             </View>
 
                         </TouchableWithoutFeedback>}
-                        {this.state.watched && <Text style={{padding:10, color:'white'}}>{'CHỌN TẬP ĐỂ XEM'}</Text>}
+                        {this.state.watched && <Text style={{padding:5, color:'white'}}>{'CHỌN TẬP ĐỂ XEM'}</Text>}
                     </View>
                     {this.state.watched && <View style={{flex: 0.20, padding: 1}}>
                         <ListView
