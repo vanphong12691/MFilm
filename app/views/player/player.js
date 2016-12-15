@@ -19,7 +19,7 @@ import Slider from 'react-native-slider';
 import Video from 'react-native-video';
 var Orientation = require('react-native-orientation');
 import KeepAwake from 'react-native-keep-awake';
-
+var HomePresenter = require('../../presenter/home');
 const window = Dimensions.get('window');
 
 class Player extends Component {
@@ -30,15 +30,19 @@ class Player extends Component {
     Orientation.addOrientationListener(this._updateOrientation);
     KeepAwake.activate()
     this.state = {
+      url:'',
       playing: true,
       muted: false,
       shuffle: false,
+      next: this.props.current<this.props.max,
+      back: this.props.current > "1",
       sliding: false,
       currentTime: 0,
       songIndex: props.songIndex,
       resizeMode: "contain",
       widthSlider: window.width - 40,
-      showingController: true
+      showingController: true,
+      current: this.props.current
     };
   }
 
@@ -62,6 +66,8 @@ class Player extends Component {
     data:React.PropTypes.string,
     current:React.PropTypes.string,
     pages:React.PropTypes.array,
+    max:React.PropTypes.string,
+    film_id: React.PropTypes.string,
   }
 
   componentWillUnmount(){
@@ -82,7 +88,7 @@ class Player extends Component {
   }
 
   goBackward(){
-    if(this.state.currentTime < 3 && this.state.songIndex !== 0 ){
+   /* if(this.state.currentTime < 3 && this.state.songIndex !== 0 ){
       this.setState({
         songIndex: this.state.songIndex - 1,
         currentTime: 0,
@@ -92,21 +98,36 @@ class Player extends Component {
       this.setState({
         currentTime: 0,
       });
+    }*/
+    let current = this.state.current;
+    if(current> 1){
+      HomePresenter.getLink(this.props.pages[current-2].link,this.props.film_id,this).then(responseData=>{
+        this.setState({
+          url: responseData[0]['link'],
+          current: current-1,
+          currentTime: 0,
+          next: true,
+          back: current-1 > 1
+        });
+      });
     }
   }
 
   goForward(){
-    this.setState({
-      songIndex: this.state.shuffle ? this.randomSongIndex() : this.state.songIndex + 1,
-      currentTime: 0,
-    });
-    this.refs.video.seek(0);
+    let current = this.state.current;
+    if(current< this.props.max){
+      HomePresenter.getLink(this.props.pages[current].link,this.props.film_id,this).then(responseData=>{
+        this.setState({
+          url: responseData[0]['link'],
+          current: current+1,
+          currentTime: 0,
+          back: true,
+          next: current > this.props.max
+        });
+      });
+    }
   }
 
-  randomSongIndex(){
-    let maxIndex = this.props.songs.length - 1;
-    return Math.floor(Math.random() * (maxIndex - 0 + 1)) + 0;
-  }
 
   setTime(params){
     if( !this.state.sliding ){
@@ -157,10 +178,17 @@ class Player extends Component {
     }
 
     let forwardButton;
-    if( !this.state.shuffle){
+    if( !this.state.next){
       forwardButton = <Icon style={ styles.forward } name="ios-skip-forward" size={25} color="#333" />;
     } else {
       forwardButton = <Icon onPress={ this.goForward.bind(this) } style={ styles.forward } name="ios-skip-forward" size={25} color="#fff" />;
+    }
+
+    let backwardButton;
+    if( !this.state.back){
+      backwardButton = <Icon style={ styles.back } name="ios-skip-backward" size={25} color="#333" />
+    } else {
+      backwardButton = <Icon onPress={ this.goBackward.bind(this) } style={ styles.back } name="ios-skip-backward" size={25} color="#fff" />;
     }
 
     let volumeButton;
@@ -177,10 +205,17 @@ class Player extends Component {
       shuffleButton = <Icon onPress={ this.toggleShuffle.bind(this) } style={ styles.shuffle } name="ios-shuffle" size={18} color="#fff" />;
     }
 
+    let url;
+    if(this.state.url){
+      url = this.state.url;
+    }else{
+      url = this.props.data;
+    }
+
     return (
         <View style={styles.container}>
           <TouchableWithoutFeedback style={styles.fullScreen} onPress={this._onClickVideo.bind(this)}>
-          <Video source={{uri: this.props.data}}
+          <Video source={{uri: url}}
                  ref="video"
                   style={styles.fullScreen}
                  volume={ this.state.muted ? 0 : 1.0}
@@ -192,6 +227,16 @@ class Player extends Component {
                  resizeMode={this.state.resizeMode}
                  repeat={false}/>
           </TouchableWithoutFeedback>
+          <View style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+          }}>
+            <Text style={{fontSize: 20, color: 'white'}} numberOfLines={1} ellipsizeMode={'tail'}>Tập {this.state.current}/{this.props.max}</Text>
+
+          </View>
           { this.state.showingController && <View style={{ bottom:0, left: 0, right: 0, alignItems:"center", position: 'absolute'}}>
           <View style={ {width: this.state.widthSlider} }>
             <Slider
@@ -211,7 +256,7 @@ class Player extends Component {
           </View>
           <View style={ styles.controls }>
             { shuffleButton }
-            <Icon onPress={ this.goBackward.bind(this) } style={ styles.back } name="ios-skip-backward" size={25} color="#fff" />
+            { backwardButton }
             { playButton }
             { forwardButton }
             { volumeButton }

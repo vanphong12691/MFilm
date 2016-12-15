@@ -214,7 +214,9 @@ class HomeCell extends Component {
                 id:Global.Constants.PLAY_ID,
                 data: responseData[0]['link'],
                 pages: this.pages,
-                current: rowData.page
+                current: rowData.page,
+                max: this.pages.length,
+                film_id: this.state.information.film_id
             });
         });
 

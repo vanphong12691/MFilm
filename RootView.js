@@ -48,7 +48,7 @@ class RootView extends Component {
       case Global.Constants.CHAPPER_ID:
         return (<ChapperView navigator={navigator} data={route.data}/>);
       case Global.Constants.PLAY_ID:
-        return (<PlayView navigator={navigator} data={route.data}/>);
+        return (<PlayView navigator={navigator} data={route.data} pages={route.pages} current={route.current} max={route.max} film_id={route.film_id}/>);
 
       case Global.Constants.H_PAGE_ID:
         return (<HPageView navigator={navigator} data={route.data}/>);
