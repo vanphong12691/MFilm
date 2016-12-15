@@ -160,7 +160,7 @@ class HomeCell extends Component {
                 result.push(<Image style={{width: Constant.WIDTH_SCREEN-20,height: (Constant.WIDTH_SCREEN-20)*0.8, borderWidth: 1, borderColor: "#ecf0f1"}} source={{uri: this.state.information.image[i]}}></Image>)
 
             }
-            result.push(<Text>{data[data.length-1]}</Text>)
+            result.push(<Text style={{lineHeight: 20, color: "#424242", paddingTop: 5, paddingBottom: 5}}>{data[data.length-1]}</Text>)
         }
         return result;
 
@@ -190,7 +190,8 @@ class HomeCell extends Component {
             HomePresenter.getLink(this.state.information.url,this.state.information.film_id,this).then(responseData=>{
                 this.props.navigator.push({
                     id:Global.Constants.PLAY_ID,
-                    data: responseData[0]['link']
+                    data: responseData[0]['link'],
+                    name: this.props.data.vi
                 });
             }).catch(error=>{
                 console.log(error);
@@ -216,7 +217,8 @@ class HomeCell extends Component {
                 pages: this.pages,
                 current: rowData.page,
                 max: this.pages.length,
-                film_id: this.state.information.film_id
+                film_id: this.state.information.film_id,
+                name: this.props.data.vi
             });
         });
 

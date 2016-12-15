@@ -37,7 +37,7 @@ module.exports = StyleSheet.create({
   row: {
     justifyContent: 'center',
     margin: 10,
-    width: 160,
+    width: Global.Constants.WIDTH_SCREEN/2-20,
     height: 240,
     backgroundColor: '#F6F6F6',
     alignItems: 'center',

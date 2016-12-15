@@ -32,7 +32,7 @@ class PageCell extends Component {
                     <View style={styles.row}>
 
 
-                           <Image style={{width:159, height: 20, flex:0.82}} source={{uri: this.props.data.picture}}></Image>
+                           <Image style={{width:Global.Constants.WIDTH_SCREEN/2-21, flex:0.82}} source={{uri: this.props.data.picture}}></Image>
 
                         <View style={{flex: 0.09, paddingLeft: 5, paddingRight: 5}}><Text style={{fontWeight: "bold", color: '#0080FF'}} numberOfLines={1} ellipsizeMode={'tail'}>{this.props.data.vi}</Text></View>
                         <View style={{flex: 0.09, paddingLeft: 5, paddingRight: 5}}><Text style={{fontWeight: "bold", color:'#81BEF7'}} numberOfLines={1} ellipsizeMode={'tail'}>{this.props.data.en}</Text></View>

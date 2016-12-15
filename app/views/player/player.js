@@ -10,7 +10,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    ActivityIndicator
 
 } from 'react-native';
 import Button from 'react-native-button';
@@ -42,7 +43,8 @@ class Player extends Component {
       resizeMode: "contain",
       widthSlider: window.width - 40,
       showingController: true,
-      current: this.props.current
+      current: this.props.current,
+      loading: true
     };
   }
 
@@ -68,6 +70,7 @@ class Player extends Component {
     pages:React.PropTypes.array,
     max:React.PropTypes.string,
     film_id: React.PropTypes.string,
+    name: React.PropTypes.string
   }
 
   componentWillUnmount(){
@@ -89,6 +92,9 @@ class Player extends Component {
 
   goBackward(){
     let current = this.state.current;
+    this.setState({
+      loading: true
+    })
     if(current> 1){
       HomePresenter.getLink(this.props.pages[current-2].link,this.props.film_id,this).then(responseData=>{
         this.setState({
@@ -103,6 +109,9 @@ class Player extends Component {
   }
 
   goForward(){
+    this.setState({
+      loading: true
+    })
     let current = this.state.current;
     if(current< this.props.max){
       HomePresenter.getLink(this.props.pages[current].link,this.props.film_id,this).then(responseData=>{
@@ -125,7 +134,10 @@ class Player extends Component {
   }
 
   onLoad(params){
-    this.setState({ songDuration: params.duration });
+    this.setState({
+      songDuration: params.duration,
+      loading: false
+    });
   }
 
   onSlidingStart(){
@@ -200,6 +212,10 @@ class Player extends Component {
     }else{
       url = this.props.data;
     }
+    let title = this.props.name;
+    if(this.props.max){
+      title += ' Tập ('+this.state.current+'/'+ this.props.max+')';
+    }
 
     return (
         <View style={styles.container}>
@@ -223,10 +239,10 @@ class Player extends Component {
             bottom: 0,
             right: 0,
           }}>
-            <Text style={{fontSize: 20, color: 'white'}} numberOfLines={1} ellipsizeMode={'tail'}>Tập {this.state.current}/{this.props.max}</Text>
+            <Text style={{fontSize: 20, color: 'white', padding: 10}} numberOfLines={1} ellipsizeMode={'tail'}>{title}</Text>
 
           </View>}
-          { this.state.showingController && <View style={{ bottom:0, left: 0, right: 0, alignItems:"center", position: 'absolute'}}>
+          { this.state.showingController &&<View style={{ bottom:0, left: 0, right: 0, alignItems:"center", position: 'absolute'}}>
           <View style={ {width: this.state.widthSlider} }>
             <Slider
                 onSlidingStart={ this.onSlidingStart.bind(this) }
@@ -251,12 +267,28 @@ class Player extends Component {
             { volumeButton }
           </View>
           </View>}
+          {this.state.loading&&<View style={styles.centering}>
+            <ActivityIndicator
+                animating = {true}
+                size="large"
+            />
+          </View>}
         </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  centering:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+    flex: 1,
+  },
   fullScreen: {
     position: 'absolute',
     top: 0,
