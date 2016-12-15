@@ -102,7 +102,7 @@ class Player extends Component {
           current: current-1,
           currentTime: 0,
           next: true,
-          back: current-1 > 1
+          back: parseInt(current)-1 > 1
         });
       });
     }
@@ -120,7 +120,7 @@ class Player extends Component {
           current: current+1,
           currentTime: 0,
           back: true,
-          next: current > this.props.max
+          next: current+1 < this.props.max
         });
       });
     }
