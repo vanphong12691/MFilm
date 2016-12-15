@@ -31,7 +31,7 @@ class HomeCell extends Component {
             return (
                 <TouchableWithoutFeedback onPress={this.props.onClickCell}>
                     <View style={styles.row}>
-                        <Text>{this.props.data['page']}</Text>
+                        <Text style={{color: '#455A64'}}>{this.props.data['page']}</Text>
                      </View>
                 </TouchableWithoutFeedback>
             );

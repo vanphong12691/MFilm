@@ -91,15 +91,15 @@ class Page extends Component
                 menuPosition={'right'}
                 isOpen={this.state.isOpen}
                 onChange={(isOpen) => this.updateMenuState(isOpen)}>
-            <View style={{flex:1, backgroundColor: "#7f8c8d"}}>
+            <View style={{flex:1, backgroundColor: "white"}}>
                 <View style={{height:40, flexDirection:"row"}}>
-                    <View style={{backgroundColor: "#34495e",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
+                    <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
                         <TouchableHighlight underlayColor="transparent"  onPress={this.onBackHome.bind(this)}>
                             <Icon  name="ios-home" size={25} color="#fff" />
                         </TouchableHighlight>
                     </View>
                     <View style={{flex: 1}}><Header title={this.state.title}/></View>
-                    <View style={{backgroundColor: "#34495e", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
+                    <View style={{backgroundColor: "#0288D1", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
                         <TouchableHighlight underlayColor="transparent"  onPress={this._onPressMenu.bind(this)}>
                             <Icon  name="ios-menu" size={25} color="#fff" />
                         </TouchableHighlight>

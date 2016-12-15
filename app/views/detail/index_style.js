@@ -20,6 +20,6 @@ module.exports = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
-
+    flex: 1,
   }
 });
