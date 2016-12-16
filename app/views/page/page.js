@@ -8,7 +8,8 @@ import {
     ScrollView,
     Image,
     TouchableHighlight,
-    RefreshControl
+    RefreshControl,
+    ActivityIndicator
 }from 'react-native';
 var HomePresenter = require('../../presenter/home');
 var Global = require('../../common/global');
@@ -35,6 +36,7 @@ class Page extends Component
             id: this.props.data.id,
             type:  this.props.data.type,
             refreshing: false,
+            loading: true,
         }
         this.page = 1;
         this.totalPage = 1;
@@ -74,7 +76,8 @@ class Page extends Component
                 this.datas = responseData.data.reverse();
               console.log("DATAS", this.datas.length);
                 this.setState({
-                    dataSource:this.ds.cloneWithRows(this.datas)
+                    dataSource:this.ds.cloneWithRows(this.datas),
+                    loading: false
                 })
             }
         }).catch(error=>{
@@ -119,6 +122,12 @@ class Page extends Component
                         renderRow={this._renderRow.bind(this)}
                         onContentSizeChange={this.onContentSizeChange.bind(this)}
                  />
+                {this.state.loading&&<View style={styles.centering}>
+                    <ActivityIndicator
+                        animating = {true}
+                        size="large"
+                    />
+                </View>}
             </View>
                 </SideMenu>
 
@@ -188,6 +197,11 @@ class Page extends Component
         })
     }
     onMenuOpen(rowData) {
+        this.setState({
+            loading: true,
+            isOpen: false,
+            title: rowData.name
+        });
         this.isRefresh = false;
         let url = '?'+rowData.type+'='+rowData.id;
         HomePresenter.getListFilm(url,this).then(responseData=>{
@@ -196,10 +210,9 @@ class Page extends Component
                 this.datas = responseData.data.reverse();
                 this.setState({
                     dataSource: this.ds.cloneWithRows(this.datas),
-                    isOpen: false,
                     id: rowData.id,
                     type: rowData.type,
-                    title: rowData.name
+                    loading: false
                 })
             }
         }).catch(error=>{
@@ -226,6 +239,18 @@ class Page extends Component
 }
 
 var styles = StyleSheet.create({
+    centering:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 40,
+        right: 0,
+        bottom: 0,
+        height: Global.Constants.HEIGHT_SCREEN-40,
+        left: 0,
+        position: 'absolute',
+        flex: 1,
+        backgroundColor: '#CFD8DC'
+    },
     container: {
         flex: 1,
         backgroundColor: '#F5FCFF',

@@ -56,7 +56,7 @@ class HomeCell extends Component {
 
     render() {
         return (
-            <View style={{backgroundColor: 'white'}}>
+            <View style={{backgroundColor: 'white', height: Global.Constants.HEIGHT_SCREEN}}>
                 <View style={{height:40, flexDirection:"row"}}>
                     <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
                         <TouchableHighlight underlayColor="transparent"  onPress={this.onBack.bind(this)}>
@@ -71,13 +71,60 @@ class HomeCell extends Component {
                         <Image style={{width: 180, height: 300}} source={{uri: this.props.data.picture}}></Image>
                         <View style={{flex: 1, backgroundColor: "#FAFAFA", padding: 10, flexDirection:'column'}}>
                             <Text style={{fontSize: 16,lineHeight: 20, color: '#304FFE', fontWeight:'bold'}} numberOfLines={1} ellipsizeMode={'tail'}>{this.props.data.en}</Text>
-                            <Text style={{fontSize: 14, lineHeight: 20, color: '#424242'}} numberOfLines={1} ellipsizeMode={'tail'}>Đang phát: {this.state.information.showing}</Text>
-                            <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} numberOfLines={1} ellipsizeMode={'tail'}>Sắp chiếu: {this.state.information.preShow}</Text>
-                            <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} numberOfLines={5} ellipsizeMode={'tail'}>Diễn viên: {this.convertArray(this.state.information.actor)}</Text>
-                            <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} numberOfLines={2} ellipsizeMode={'tail'}>Quốc gia: {this.convertArray(this.state.information.country)}</Text>
-                            <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} numberOfLines={1} ellipsizeMode={'tail'}>Thời lượng: {this.state.information.duration}</Text>
-                            <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} numberOfLines={1} ellipsizeMode={'tail'}>Lượt xem: {this.state.information.view}</Text>
-                            <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} numberOfLines={1} ellipsizeMode={'tail'}>Năm SX: {this.state.information.year}</Text>
+
+                            <Text numberOfLines={1} ellipsizeMode={'tail'}>
+                                <Text style={{color:'#546E7A'}}>Đang phát: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20, color: '#424242'}}>{this.state.information.showing}</Text>
+                            </Text>
+                            <Text numberOfLines={1} ellipsizeMode={'tail'}>
+                                <Text style={{color:'#546E7A'}}>Sắp chiếu: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}}>{this.state.information.preShow}</Text>
+                            </Text>
+
+                            <Text numberOfLines={5} ellipsizeMode={'tail'}>
+                                <Text style={{color:'#546E7A'}}>Diễn viên: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}}>{this.convertArray(this.state.information.actor)}</Text>
+                            </Text>
+                            <Text numberOfLines={2} ellipsizeMode={'tail'}>
+                                <Text style={{color:'#546E7A'}}>Quốc gia: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}}>{this.convertArray(this.state.information.country)}</Text>
+                            </Text>
+                            <Text numberOfLines={1} ellipsizeMode={'tail'}>
+                                <Text style={{color:'#546E7A'}}>Thời lượng: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} >Thời lượng: {this.state.information.duration}</Text>
+                            </Text>
+                            <Text numberOfLines={1} ellipsizeMode={'tail'}>
+                                <Text style={{color:'#546E7A'}}>Lượt xem: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} >{this.state.information.view}</Text>
+                            </Text>
+                            <Text numberOfLines={1} ellipsizeMode={'tail'}>
+                                <Text style={{color:'#546E7A'}}>Năm SX: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} >{this.state.information.year}</Text>
+                            </Text>
+
+
+
+
+
+                            <View style={{
+                                position: 'absolute',
+                                left: 40,
+                                right:40,
+                                bottom:10,
+                                height: 30,
+                                backgroundColor: '#F44336',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                {!this.state.watched && <TouchableHighlight underlayColor="transparent" onPress={!this.state.loading&&this.playFilm.bind(this)}>
+                                    <View>
+                                        <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>{"XEM PHIM"}</Text>
+                                    </View>
+
+                                </TouchableHighlight>}
+                                {this.state.watched && <Text style={{color:'white'}}>{'CHỌN TẬP ĐỂ XEM'}</Text>}
+
+                            </View>
                         </View>
 
                     </View>
@@ -91,15 +138,6 @@ class HomeCell extends Component {
                     </View>
                     <View style={{backgroundColor :'#FAFAFA', padding: 10}}>
                         <Text style={{lineHeight: 20, color: "#424242", paddingTop: 5, paddingBottom: 5}}>{this.state.information.lc}</Text>
-                    </View>
-                    <View style={{backgroundColor :'green', alignItems: 'center'}}>
-                        {!this.state.watched && <TouchableWithoutFeedback onPress={!this.state.loading&&this.playFilm.bind(this)} style={{width: 50, height: 100}}>
-                            <View>
-                                <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold', padding:5}}>{"XEM PHIM"}</Text>
-                            </View>
-
-                        </TouchableWithoutFeedback>}
-                        {this.state.watched && <Text style={{padding:5, color:'white'}}>{'CHỌN TẬP ĐỂ XEM'}</Text>}
                     </View>
                     {this.state.watched && <View style={{flex: 0.20, padding: 1}}>
                         <ListView

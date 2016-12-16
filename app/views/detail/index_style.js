@@ -15,11 +15,12 @@ module.exports = StyleSheet.create({
   centering:{
     alignItems: 'center',
     justifyContent: 'center',
-    top: 0,
+    top: 40,
     right: 0,
     bottom: 0,
     left: 0,
     position: 'absolute',
-    flex: 1,
+    height: Global.Constants.HEIGHT_SCREEN,
+    backgroundColor: '#CFD8DC'
   }
 });

@@ -11,7 +11,7 @@ import {
     View,
     Text,
     Image,
-    TouchableWithoutFeedback
+    TouchableHighlight
 }from 'react-native';
 var styles = require('./index_style');
 var Global = require('../../../common/global');
@@ -29,11 +29,13 @@ class HomeCell extends Component {
     render() {
         if(this.props.data){
             return (
-                <TouchableWithoutFeedback onPress={this.props.onClickCell}>
+                <TouchableHighlight onPress={this.props.onClickCell} style={{  margin: 4,
+                    width: 30,
+                    height: 30,}}>
                     <View style={styles.row}>
                         <Text style={{color: '#455A64'}}>{this.props.data['page']}</Text>
                      </View>
-                </TouchableWithoutFeedback>
+                </TouchableHighlight>
             );
         } else {
             return(

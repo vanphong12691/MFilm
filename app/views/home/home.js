@@ -9,7 +9,8 @@ import {
     Image,
     TouchableHighlight,
     RefreshControl,
-    ViewPagerAndroid
+    ViewPagerAndroid,
+    ActivityIndicator
 }from 'react-native';
 var HomePresenter = require('../../presenter/home');
 var Global = require('../../common/global');
@@ -43,7 +44,8 @@ class Page extends Component
             id: 0,
             type: 0,
             refreshing: false,
-            loaded: false
+            loaded: false,
+            loading:false,
         }
     }
 
@@ -69,6 +71,9 @@ class Page extends Component
         });
     }
     _changeTab(item){
+        this.setState({
+            loading: true
+        })
         if(item.i==3){
             let url ="?order=publish_date&cat_id=56";
             HomePresenter.getListFilm(url,this).then(responseData=>{
@@ -76,7 +81,8 @@ class Page extends Component
 
                 if(responseData.data.length > 0){
                     this.setState({
-                        rap:responseData.data
+                        rap:responseData.data,
+                        loading: false
                     })
                 }
             }).catch(error=>{
@@ -88,7 +94,8 @@ class Page extends Component
             HomePresenter.getMostViewFilm(this).then(responseData=>{
                 if(responseData){
                     this.setState({
-                        mostView:responseData.data
+                        mostView:responseData.data,
+                        loading: false
                     })
                 }
             }).catch(error=>{
@@ -100,6 +107,7 @@ class Page extends Component
     render(){
 
         return (
+
                 <ScrollableTabView
                     removeClippedSubviews={false}
                     style={{ backgroundColor: 'white' }}
@@ -165,6 +173,13 @@ class Page extends Component
                                 <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.film[2]}></Hot>
                             </ScrollView>
                         </View>
+
+                        {!this.state.loaded&&<View style={styles.centering}>
+                            <ActivityIndicator
+                                animating = {true}
+                                size="large"
+                            />
+                        </View>}
                     </View>
 
                     <View tabLabel="ios-flame" style={styles.tabView}>
@@ -194,7 +209,12 @@ class Page extends Component
                             </View>
 
                             <MostView onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.mostView}></MostView>
-
+                            {this.state.loading&&<View style={styles.centering}>
+                                <ActivityIndicator
+                                    animating = {true}
+                                    size="large"
+                                />
+                            </View>}
 
                         </View>
                     </View>
@@ -212,6 +232,12 @@ class Page extends Component
                                 </TouchableHighlight>
                             </View>
                             <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.rap}></Hot>
+                            {this.state.loading&&<View style={styles.centering}>
+                                <ActivityIndicator
+                                    animating = {true}
+                                    size="large"
+                                />
+                            </View>}
                         </View>
                     </View>
                     <View tabLabel="ios-menu" style={styles.tabView}>
@@ -284,6 +310,17 @@ class Page extends Component
 }
 
 var styles = StyleSheet.create({
+    centering:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 40,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        position: 'absolute',
+        height: Global.Constants.HEIGHT_SCREEN-40,
+        backgroundColor: '#CFD8DC'
+    },
     container: {
         flex: 1,
         backgroundColor: '#F5FCFF',
