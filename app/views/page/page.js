@@ -95,7 +95,7 @@ class Page extends Component
                 <View style={{height:40, flexDirection:"row"}}>
                     <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
                         <TouchableHighlight underlayColor="transparent"  onPress={this.onBackHome.bind(this)}>
-                            <Icon  name="ios-home" size={25} color="#fff" />
+                            <Icon  name="ios-arrow-back" size={25} color="#fff" />
                         </TouchableHighlight>
                     </View>
                     <View style={{flex: 1}}><Header title={this.state.title}/></View>
@@ -126,9 +126,7 @@ class Page extends Component
         )
     }
     onBackHome(){
-        this.props.navigator.push({
-            id:Global.Constants.HOME_ID
-        });
+        this.props.navigator.pop();
     }
     onListViewLayout(){
         var self=this;
