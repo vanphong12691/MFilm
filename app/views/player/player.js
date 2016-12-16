@@ -26,7 +26,6 @@ const window = Dimensions.get('window');
 var hiddenController;
 class Player extends Component {
   constructor(props){
-    Orientation.unlockAllOrientations();
     super(props);
     this._updateOrientation = this._updateOrientation.bind(this);
     Orientation.addOrientationListener(this._updateOrientation);
@@ -51,6 +50,7 @@ class Player extends Component {
   }
 
   _updateOrientation(or) {
+
     var delay=1000;
     var _this=this;
     setTimeout(function() {
@@ -107,6 +107,7 @@ class Player extends Component {
   }
 
   goBackward(){
+    clearTimeout(hiddenController);
     let current = this.state.current;
     this.setState({
       loading: true
@@ -125,6 +126,7 @@ class Player extends Component {
   }
 
   goForward(){
+    clearTimeout(hiddenController);
     this.setState({
       loading: true
     })
@@ -270,6 +272,8 @@ class Player extends Component {
       title += ' Tập ('+this.state.current+'/'+ this.props.max+')';
     }
 
+
+
     return (
         <View style={styles.container}>
           <TouchableWithoutFeedback style={styles.fullScreen} onPress={this._onClickVideo.bind(this)}>
@@ -310,7 +314,7 @@ class Player extends Component {
               { forwardButtonV }
 
             </View>
-            <View style={ {width: this.state.widthSlider, marginBottom: 5} }>
+            <View style={ {width: this.state.widthSlider-40, marginBottom: 5} }>
               <Slider
                   onSlidingStart={ this.onSlidingStart.bind(this) }
                   onSlidingComplete={ this.onSlidingComplete.bind(this) }
@@ -325,6 +329,15 @@ class Player extends Component {
                 <Text style={ styles.time }>{ formattedTime(this.state.currentTime)  }</Text>
                 <Text style={ styles.timeRight }>- { formattedTime( this.state.songDuration - this.state.currentTime ) }</Text>
               </View>
+
+            </View>
+            <View style={{
+              position: 'absolute',
+              bottom: 10,
+              right: 10,
+            }}>
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressCollapse.bind(this)} name="md-contract" size={25} color="#fff" />
+
             </View>
           </View>}
 
@@ -345,7 +358,25 @@ class Player extends Component {
               <Text style={ styles.timeRight }>- { formattedTime( this.state.songDuration - this.state.currentTime ) }</Text>
             </View>
           </View>
+            <View style={{
+              position: 'absolute',
+              left: 20,
+              bottom: 10,
+              right: 0,
+            }}>
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressBack.bind(this)} name="ios-arrow-back" size={30} color="#fff" />
+
+            </View>
+            <View style={{
+              position: 'absolute',
+              bottom: 10,
+              right: 20,
+            }}>
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpand.bind(this)} name="md-expand" size={25} color="#fff" />
+
+            </View>
           <View style={ styles.controls }>
+
             { shuffleButton }
             { backwardButton }
             { playButton }
@@ -361,6 +392,31 @@ class Player extends Component {
           </View>}
         </View>
     );
+  }
+
+  _onPressBack(){
+    clearTimeout(hiddenController);
+    this.props.navigator.pop();
+  }
+  _onPressExpand(){
+    clearTimeout(hiddenController);
+    Orientation.lockToLandscape();
+    var _this = this;
+    hiddenController = setTimeout(function(){
+      _this.setState({
+        showingController: false
+      })
+    }, 5000);
+  }
+  _onPressCollapse(){
+    clearTimeout(hiddenController);
+    Orientation.lockToPortrait();
+    var _this = this;
+    hiddenController = setTimeout(function(){
+      _this.setState({
+        showingController: false
+      })
+    }, 5000);
   }
 }
 
