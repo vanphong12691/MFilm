@@ -360,7 +360,7 @@ class Player extends Component {
           </View>
             <View style={{
               position: 'absolute',
-              left: 20,
+              left: 10,
               bottom: 10,
               right: 0,
             }}>
@@ -370,7 +370,7 @@ class Player extends Component {
             <View style={{
               position: 'absolute',
               bottom: 10,
-              right: 20,
+              right: 10,
             }}>
               <Icon style={ {marginLeft: 0} } onPress={this._onPressExpand.bind(this)} name="md-expand" size={25} color="#fff" />
 

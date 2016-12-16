@@ -45,7 +45,7 @@ class MostView extends Component
         }
         return (
         <View style={styles.container}>
-                <View style={{flex: 1, borderTopColor:'#81D4FA', borderTopWidth:1, backgroundColor: '#E1F5FE', height: 30, flexDirection:'row', alignItems:'center', justifyContent:'center', marginBottom: 5}}>
+                <View style={{borderTopColor:'#81D4FA', borderTopWidth:1, backgroundColor: '#E1F5FE', height: 30, flexDirection:'row', alignItems:'center', justifyContent:'center', marginBottom: 5}}>
                     <View style={[styles.tabView,this.state.type=='d' && styles.active]}>
                         <TouchableHighlight onPress={this._onPressTab.bind(this, 'd')} underlayColor="transparent" style={{height: 30, alignItems: 'center', justifyContent: 'center'}} >
                             <Text style={styles.textTab}>NGÀY</Text>

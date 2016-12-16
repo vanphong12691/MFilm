@@ -18,10 +18,9 @@ const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 var HomePresenter = require('../../presenter/home');
 const styles = StyleSheet.create({
     menuScroll: {
-        flex: 1,
         width: window.width,
         height: window.height,
-        backgroundColor: '#151515',
+        backgroundColor: 'white',
         paddingLeft: 20,
         paddingTop: 5
     },
