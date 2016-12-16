@@ -167,7 +167,7 @@ class HomeCell extends Component {
 
     }
     playFilm(){
-        if(this.state.information.showing.startsWith("Tập") || (this.state.information.showing.startsWith("Full") && !this.state.information.showing.startsWith("Full HD"))){
+        if(this.state.information.showing.startsWith("Tập") || (this.state.information.showing.contains("Full") && !this.state.information.showing.startsWith("Full HD"))){
 
             HomePresenter.getChapperFilm(this.state.information.url,this).then(responseData=>{
                 if(responseData.length > 0){

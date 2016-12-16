@@ -49,19 +49,23 @@ class Player extends Component {
   }
 
   _updateOrientation(or) {
-    let resizeMode = "";
-    let widthSlider = 0;
-    if(or == "LANDSCAPE"){
-        resizeMode = "cover";
-        widthSlider = window.height-60
-    }else{
-        resizeMode = "contain";
-        widthSlider = window.width - 40
-    }
-      this.setState({
-        resizeMode: resizeMode,
-        widthSlider: widthSlider
-      })
+    var delay=1000;
+    var _this=this;
+    setTimeout(function() {
+      if(or == "LANDSCAPE"){
+        _this.setState({
+          resizeMode: "cover",
+          widthSlider: window.height - 60
+        })
+      }else{
+        _this.setState({
+          resizeMode: "contain",
+          widthSlider: window.width - 40
+        })
+      }
+    }, delay);
+
+
   }
 
   propTypes:{

@@ -29,9 +29,9 @@ class Search extends Component
 
     render(){
         return (
-                <View style={{flex:1,height: 40, justifyContent:'center', alignItems:'center', backgroundColor:'#0288D1', flexDirection:'row'}}>
+                <View style={{height: 40, justifyContent:'center', alignItems:'center', backgroundColor:'#0288D1', flexDirection:'row'}}>
 
-                     <TouchableHighlight onPress={this._onBack.bind(this)} underlayColor="transparent" style={{height: 30, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                     <TouchableHighlight onPress={this._onBack.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
                             <Icon  name="ios-arrow-back" size={25} color="#fff" />
                       </TouchableHighlight>
                     <View style={{flex: 1}}>
@@ -49,7 +49,7 @@ class Search extends Component
                             inputStyle={{ color: '#0288D1' }}
                         />
                     </View>
-                    <TouchableHighlight onPress={this.findFilm.bind(this)} underlayColor="transparent" style={{height: 30, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                    <TouchableHighlight onPress={this.findFilm.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
                         <Icon  name="ios-search" size={25} color="#fff" />
                     </TouchableHighlight>
                 </View>
