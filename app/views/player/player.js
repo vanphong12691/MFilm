@@ -14,6 +14,7 @@ import {
     ActivityIndicator
 
 } from 'react-native';
+import Global from '../../common/global';
 import Button from 'react-native-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Slider from 'react-native-slider';
@@ -22,7 +23,7 @@ var Orientation = require('react-native-orientation');
 import KeepAwake from 'react-native-keep-awake';
 var HomePresenter = require('../../presenter/home');
 const window = Dimensions.get('window');
-
+var hiddenController;
 class Player extends Component {
   constructor(props){
     Orientation.unlockAllOrientations();
@@ -44,7 +45,8 @@ class Player extends Component {
       widthSlider: window.width - 40,
       showingController: true,
       current: this.props.current,
-      loading: true
+      loading: true,
+      vertical: true,
     };
   }
 
@@ -55,12 +57,14 @@ class Player extends Component {
       if(or == "LANDSCAPE"){
         _this.setState({
           resizeMode: "cover",
-          widthSlider: window.height - 60
+          vertical: false,
+          widthSlider: window.height -40
         })
       }else{
         _this.setState({
           resizeMode: "contain",
-          widthSlider: window.width - 40
+          vertical: true,
+          widthSlider: window.width -40
         })
       }
     }, delay);
@@ -83,7 +87,15 @@ class Player extends Component {
     Orientation.lockToPortrait();
   }
   togglePlay(){
+    clearTimeout(hiddenController);
     this.setState({ playing: !this.state.playing });
+    var _this = this;
+    hiddenController = setTimeout(function(){
+      _this.setState({
+        showingController: false
+      })
+    }, 5000);
+
   }
 
   toggleVolume(){
@@ -138,10 +150,18 @@ class Player extends Component {
   }
 
   onLoad(params){
+    clearTimeout(hiddenController);
     this.setState({
       songDuration: params.duration,
       loading: false
     });
+    var _this = this;
+    hiddenController = setTimeout(function(){
+      _this.setState({
+        showingController: false
+      })
+    }, 5000);
+
   }
 
   onSlidingStart(){
@@ -162,9 +182,16 @@ class Player extends Component {
     this.goForward();
   }
   _onClickVideo(){
+    clearTimeout(hiddenController);
     this.setState({
       showingController: !this.state.showingController
     })
+    var _this = this;
+    hiddenController = setTimeout(function(){
+      _this.setState({
+        showingController: false
+      })
+    }, 5000);
   }
 
   render() {
@@ -188,6 +215,28 @@ class Player extends Component {
     } else {
       forwardButton = <Icon onPress={ this.goForward.bind(this) } style={ styles.forward } name="ios-skip-forward" size={25} color="#fff" />;
     }
+
+    let forwardButtonV;
+    if( !this.state.next){
+      forwardButtonV = <Icon style={ styles.forward } name="ios-skip-forward" size={50} color="transparent" />;
+    } else {
+      forwardButtonV = <Icon onPress={ this.goForward.bind(this) } style={ styles.forward } name="ios-skip-forward" size={50} color="#fff" />;
+    }
+
+    let backwardButtonV;
+    if( !this.state.back){
+      backwardButtonV = <Icon style={ styles.back } name="ios-skip-backward" size={50} color="transparent" />
+    } else {
+      backwardButtonV = <Icon onPress={ this.goBackward.bind(this) } style={ styles.back } name="ios-skip-backward" size={50} color="#fff" />;
+    }
+
+    let playButtonV;
+    if( this.state.playing ){
+      playButtonV = <Icon onPress={ this.togglePlay.bind(this) } style={ styles.play } name="ios-pause" size={50} color="#fff" />;
+    } else {
+      playButtonV = <Icon onPress={ this.togglePlay.bind(this) } style={ styles.play } name="ios-play" size={50} color="#fff" />;
+    }
+
 
     let backwardButton;
     if( !this.state.back){
@@ -246,7 +295,40 @@ class Player extends Component {
             <Text style={{fontSize: 20, color: 'white', padding: 10}} numberOfLines={1} ellipsizeMode={'tail'}>{title}</Text>
 
           </View>}
-          { this.state.showingController &&<View style={{ bottom:0, left: 0, right: 0, alignItems:"center", position: 'absolute'}}>
+
+          { this.state.showingController && !this.state.vertical &&<View style={{ top:0, bottom:0, left: 0, right: 0, alignItems:"center", position: 'absolute'}}>
+
+            <View style={{
+              flex: 1,
+              alignItems: 'center',
+              flexDirection: 'row',
+              marginTop: 0,
+            }}>
+
+              { backwardButtonV }
+              { playButton }
+              { forwardButtonV }
+
+            </View>
+            <View style={ {width: this.state.widthSlider, marginBottom: 5} }>
+              <Slider
+                  onSlidingStart={ this.onSlidingStart.bind(this) }
+                  onSlidingComplete={ this.onSlidingComplete.bind(this) }
+                  onValueChange={ this.onSlidingChange.bind(this) }
+                  minimumTrackTintColor='#851c44'
+                  style={ styles.slider }
+                  trackStyle={ styles.sliderTrack }
+                  thumbStyle={ styles.sliderThumb }
+                  value={ songPercentage }/>
+
+              <View style={ styles.timeInfo }>
+                <Text style={ styles.time }>{ formattedTime(this.state.currentTime)  }</Text>
+                <Text style={ styles.timeRight }>- { formattedTime( this.state.songDuration - this.state.currentTime ) }</Text>
+              </View>
+            </View>
+          </View>}
+
+          { this.state.showingController && this.state.vertical &&<View style={{ bottom:0, left: 0, right: 0, alignItems:"center", position: 'absolute'}}>
           <View style={ {width: this.state.widthSlider} }>
             <Slider
                 onSlidingStart={ this.onSlidingStart.bind(this) }
