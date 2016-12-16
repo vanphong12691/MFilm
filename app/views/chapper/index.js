@@ -47,7 +47,7 @@ class PlayVideo extends Component {
                 })
             }
         }).catch(error=>{
-            alert(1);
+            alert("Không thể kết nối đến máy chủ, vui lòng thử lại sau!");
 
         });
     }

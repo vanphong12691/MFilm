@@ -74,7 +74,7 @@ class PageHome extends Component
                 })
             }
         }).catch(error=>{
-            alert(1);
+            alert("Không thể kết nối đến máy chủ, vui lòng thử lại sau!");
 
         });
     }
@@ -168,7 +168,7 @@ class PageHome extends Component
                         this.scrollTo((responseData.data.length-1)*260/2);
                     }
                 }).catch(error=>{
-                    alert(1);
+                alert("Không thể kết nối đến máy chủ, vui lòng thử lại sau!");
 
                 });
         }
@@ -181,25 +181,6 @@ class PageHome extends Component
         })
     }
     onMenuOpen(rowData) {
-        /*this.isRefresh = false;
-        let url = '?'+rowData.type+'='+rowData.id;
-        HomePresenter.getListFilm(url,this).then(responseData=>{
-
-            if(responseData.data.length > 0){
-                this.datas = responseData.data.reverse();
-                this.setState({
-                    dataSource: this.ds.cloneWithRows(this.datas),
-                    isOpen: false,
-                    id: rowData.id,
-                    type: rowData.type,
-                    title: rowData.name
-                })
-            }
-        }).catch(error=>{
-            alert(1);
-
-        });*/
-
         this.props.navigator.push({
             id:Global.Constants.PAGE_ID,
             data: {

@@ -49,7 +49,7 @@ class HomeCell extends Component {
                     loading: false,
             });
         }).catch(error=>{
-            alert(1);
+                alert("Không thể kết nối đến máy chủ, vui lòng thử lại sau!");
 
         });
     }
@@ -178,7 +178,7 @@ class HomeCell extends Component {
                     })
                 }
             }).catch(error=>{
-                alert(1);
+                alert("Không thể kết nối đến máy chủ, vui lòng thử lại sau!");
 
             });
            /* this.props.navigator.push({
