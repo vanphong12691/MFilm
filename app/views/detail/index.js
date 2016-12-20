@@ -230,6 +230,7 @@ class HomeCell extends Component {
                     id:Global.Constants.PLAY_ID,
                     data: responseData[0]['link'],
                     type: responseData[0]['type'],
+                    typeFilm: 'phim_le',
                     quality: responseData,
                     name: this.props.data.vi
                 });
@@ -256,6 +257,7 @@ class HomeCell extends Component {
                 data: responseData[0]['link'],
                 type: responseData[0]['type'],
                 quality: responseData,
+                typeFilm: 'phim_bo',
                 pages: this.pages,
                 current: rowData.page,
                 max: this.pages.length,

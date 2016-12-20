@@ -11,10 +11,12 @@ import {
   View,
   TouchableOpacity,
     TouchableWithoutFeedback,
-    ActivityIndicator
+    ActivityIndicator,
+    AsyncStorage
 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+var Global = require('../../common/global');
 import Slider from 'react-native-slider';
 import Video from 'react-native-video';
 var Orientation = require('react-native-orientation');
@@ -45,8 +47,23 @@ class Player extends Component {
       loading: true,
       vertical: true,
       changQuality: false,
-      type: this.props.type
+      type: this.props.type,
+      setting:{
+        "phim_bo" : {
+          "begin": 0,
+          "end": 0
+        }
+      }
     };
+
+    AsyncStorage.getItem(Global.Constants.SETTING_STORE_KEY)
+        .then(value=>{
+          if(value){
+            this.setState({
+              setting: JSON.parse(value)
+            })
+          }
+        });
   }
 
   _updateOrientation(or) {
@@ -80,7 +97,8 @@ class Player extends Component {
     max:React.PropTypes.string,
     film_id: React.PropTypes.string,
     name: React.PropTypes.string,
-    type: React.PropTypes.string
+    type: React.PropTypes.string,
+    typeFilm: React.PropTypes.string,
   }
 
   componentWillUnmount(){
@@ -173,6 +191,10 @@ class Player extends Component {
     let change = this.state.changQuality;
     if(change){
        this.refs.video.seek( this.state.currentTimeTemp );
+    }else{
+      if(this.state.setting['phim_bo']['begin'] && this.props.typeFilm == 'phim_bo'){
+        this.refs.video.seek(this.state.setting['phim_bo']['begin']);
+      }
     }
     this.setState({
       songDuration: params.duration,

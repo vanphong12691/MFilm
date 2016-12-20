@@ -70,6 +70,11 @@ class Page extends Component
             id:Global.Constants.SEARCH_ID,
         });
     }
+    onPressSetting(){
+        this.props.navigator.push({
+            id:Global.Constants.SETTING_ID,
+        });
+    }
     _changeTab(item){
         this.setState({
             loading: true
@@ -122,8 +127,11 @@ class Page extends Component
                                     <Icon  name="ios-home" size={25} color="#fff" />
                                 </TouchableHighlight>
                                 <View style={{flex:1, justifyContent: 'center'}}><Text style={{color: 'white', fontSize: 16}} >{'TRANG CHỦ'}</Text></View>
-                                <TouchableHighlight onPress={this.onPressSearch.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
-                                    <Icon  name="ios-search" size={25} color="#fff" />
+                                <TouchableHighlight onPress={this.onPressSearch.bind(this)} underlayColor="transparent" style={{height: 40, width: 25,alignItems: 'center', justifyContent: 'center'}} >
+                                <Icon  name="ios-search" size={25} color="#fff" />
+                            </TouchableHighlight>
+                            <TouchableHighlight onPress={this.onPressSetting.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
+                                    <Icon  name="ios-settings" size={25} color="#fff" />
                                 </TouchableHighlight>
                             </View>
 
