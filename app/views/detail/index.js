@@ -59,7 +59,7 @@ class HomeCell extends Component {
             <View style={{backgroundColor: 'white', height: Global.Constants.HEIGHT_SCREEN}}>
                 <View style={{height:40, flexDirection:"row"}}>
                     <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
-                        <TouchableHighlight underlayColor="transparent"  onPress={this.onBack.bind(this)}>
+                        <TouchableHighlight underlayColor="transparent"  style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}} onPress={this.onBack.bind(this)}>
                             <Icon  name="ios-arrow-back" size={25} color="#fff" />
                         </TouchableHighlight>
                     </View>

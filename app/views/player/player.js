@@ -167,6 +167,7 @@ class Player extends Component {
   }
 
   onSlidingStart(){
+    clearTimeout(hiddenController);
     this.setState({ sliding: true });
   }
 
@@ -178,6 +179,12 @@ class Player extends Component {
   onSlidingComplete(){
     this.refs.video.seek( this.state.currentTime );
     this.setState({ sliding: false });
+    var _this = this;
+    hiddenController = setTimeout(function(){
+      _this.setState({
+        showingController: false
+      })
+    }, 5000);
   }
 
   onEnd(){
