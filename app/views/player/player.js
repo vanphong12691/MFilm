@@ -14,8 +14,6 @@ import {
     ActivityIndicator
 
 } from 'react-native';
-import Global from '../../common/global';
-import Button from 'react-native-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Slider from 'react-native-slider';
 import Video from 'react-native-video';
@@ -46,6 +44,8 @@ class Player extends Component {
       current: this.props.current,
       loading: true,
       vertical: true,
+      changQuality: false,
+      type: this.props.type
     };
   }
 
@@ -76,9 +76,11 @@ class Player extends Component {
     data:React.PropTypes.string,
     current:React.PropTypes.string,
     pages:React.PropTypes.array,
+    quality:React.PropTypes.array,
     max:React.PropTypes.string,
     film_id: React.PropTypes.string,
-    name: React.PropTypes.string
+    name: React.PropTypes.string,
+    type: React.PropTypes.string
   }
 
   componentWillUnmount(){
@@ -115,8 +117,9 @@ class Player extends Component {
     if(current> 1){
       HomePresenter.getLink(this.props.pages[current-2].link,this.props.film_id,this).then(responseData=>{
         this.setState({
-          url: responseData[0]['link'],
+          url: this.getUrlByType(responseData),
           current: current-1,
+          quality: responseData,
           currentTime: 0,
           next: true,
           back: parseInt(current)-1 > 1
@@ -134,14 +137,27 @@ class Player extends Component {
     if(current< this.props.max){
       HomePresenter.getLink(this.props.pages[current].link,this.props.film_id,this).then(responseData=>{
         this.setState({
-          url: responseData[0]['link'],
+          url: this.getUrlByType(responseData),
           current: current+1,
+          quality: responseData,
           currentTime: 0,
           back: true,
           next: current+1 < this.props.max
         });
       });
     }
+  }
+  getUrlByType(data, type){
+    if(data){
+      for(let i=0; i<data.length; i++){
+        if(data[i]['type']==type){
+          return data[i]['link'];
+        }
+      }
+      return data[0]['link'];
+    }
+    return  '';
+
   }
 
 
@@ -153,16 +169,23 @@ class Player extends Component {
 
   onLoad(params){
     clearTimeout(hiddenController);
+
+    let change = this.state.changQuality;
+    if(change){
+       this.refs.video.seek( this.state.currentTimeTemp );
+    }
     this.setState({
       songDuration: params.duration,
-      loading: false
+      loading: false,
+      changQuality: false,
     });
+
     var _this = this;
     hiddenController = setTimeout(function(){
       _this.setState({
         showingController: false
       })
-    }, 5000);
+    }, 8000);
 
   }
 
@@ -188,6 +211,9 @@ class Player extends Component {
   }
 
   onEnd(){
+    this.setState({
+      changQuality: false,
+    })
     this.goForward();
   }
   _onClickVideo(){
@@ -198,7 +224,8 @@ class Player extends Component {
     var _this = this;
     hiddenController = setTimeout(function(){
       _this.setState({
-        showingController: false
+        showingController: false,
+        changQuality: false,
       })
     }, 5000);
   }
@@ -279,6 +306,13 @@ class Player extends Component {
       title += ' Tập ('+this.state.current+'/'+ this.props.max+')';
     }
 
+    let quality;
+    if(this.state.quality){
+      quality = this.state.quality;
+    }else{
+      quality = this.props.quality;
+    }
+
 
 
     return (
@@ -321,7 +355,7 @@ class Player extends Component {
               { forwardButtonV }
 
             </View>
-            <View style={ {width: this.state.widthSlider-40, marginBottom: 5} }>
+            <View style={ {width: this.state.widthSlider-80, marginBottom: 5} }>
               <Slider
                   onSlidingStart={ this.onSlidingStart.bind(this) }
                   onSlidingComplete={ this.onSlidingComplete.bind(this) }
@@ -338,12 +372,59 @@ class Player extends Component {
               </View>
 
             </View>
+
+            <View style={{
+              position: 'absolute',
+              bottom: 10,
+              right: 40,
+            }}>
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpandQuality.bind(this)} name="ios-settings" size={20} color="#fff" />
+
+            </View>
+
+            {this.state.type >= "720p" && <View style={{
+              position: 'absolute',
+              bottom: 20,
+              right: 30,
+              backgroundColor:'red',
+              paddingLeft: 2,
+              paddingRight: 2,
+              height: 12,
+              alignItems: 'center',
+            }}>
+              <Text onPress={this._onPressExpandQuality.bind(this)} style={{fontSize: 8, fontWeight:'bold'}}>HD</Text>
+
+            </View>}
+
+            {this.state.changQuality&&<View style={{
+              position: 'absolute',
+              bottom: 20,
+              right: 45,
+              backgroundColor: '#263238',
+              padding: 5,
+              width: 50,
+              alignItems: 'center',
+            }}>{quality.map((item, i) => {
+              if(item['type'] == this.state.type){
+                return (<Text style={{color:'#D50000', fontWeight:'bold'}}>{item['type']}</Text>);
+              }else{
+                return (
+                    <Text style={{color:'white'}} onPress={this._onPressQuality.bind(this, item)}>{item['type']}</Text>
+                )
+              }
+            })}
+
+            </View>}
+
+
+
+
             <View style={{
               position: 'absolute',
               bottom: 10,
               right: 10,
             }}>
-              <Icon style={ {marginLeft: 0} } onPress={this._onPressCollapse.bind(this)} name="md-contract" size={25} color="#fff" />
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressCollapse.bind(this)} name="md-contract" size={20} color="#fff" />
 
             </View>
           </View>}
@@ -376,19 +457,62 @@ class Player extends Component {
             </View>
             <View style={{
               position: 'absolute',
-              bottom: 10,
+              bottom: 15,
+              right: 40,
+            }}>
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpandQuality.bind(this)} name="ios-settings" size={20} color="#fff" />
+
+            </View>
+
+            {this.state.type >= "720p" && <View style={{
+              position: 'absolute',
+              bottom: 25,
+              right: 30,
+              backgroundColor:'red',
+              paddingLeft: 2,
+              paddingRight: 2,
+              height: 12,
+              alignItems: 'center',
+            }}>
+              <Text onPress={this._onPressExpandQuality.bind(this)} style={{fontSize: 8, fontWeight:'bold'}}>HD</Text>
+
+            </View>}
+
+            {this.state.changQuality&&<View style={{
+            position: 'absolute',
+            bottom: 25,
+            right: 45,
+            backgroundColor: '#263238',
+            padding: 5,
+            width: 50,
+            alignItems: 'center',
+          }}>{quality.map((item, i) => {
+            if(item['type'] == this.state.type){
+              return (<Text style={{color:'#D50000', fontWeight:'bold'}}>{item['type']}</Text>);
+            }else{
+              return (
+                  <Text style={{color:'white'}} onPress={this._onPressQuality.bind(this, item)}>{item['type']}</Text>
+              )
+            }
+          })}
+
+          </View>}
+
+
+
+
+            <View style={{
+              position: 'absolute',
+              bottom: 15,
               right: 10,
             }}>
-              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpand.bind(this)} name="md-expand" size={25} color="#fff" />
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpand.bind(this)} name="md-expand" size={20} color="#fff" />
 
             </View>
           <View style={ styles.controls }>
-
-            { shuffleButton }
             { backwardButton }
             { playButton }
             { forwardButton }
-            { volumeButton }
           </View>
           </View>}
           {this.state.loading&&<View style={styles.centering}>
@@ -399,6 +523,22 @@ class Player extends Component {
           </View>}
         </View>
     );
+  }
+
+  _onPressQuality(item,event){
+    this.setState({
+        loading: true,
+        currentTimeTemp: this.state.currentTime,
+        type: item['type'],
+        url: item['link']
+    })
+  }
+
+  _onPressExpandQuality(){
+    clearTimeout(hiddenController);
+    this.setState({
+      changQuality: true,
+    })
   }
 
   _onPressBack(){
@@ -472,14 +612,14 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   back: {
-    marginLeft: 45,
+    marginLeft: 40,
   },
   play: {
-    marginLeft: 50,
-    marginRight: 50,
+    marginLeft: 40,
+    marginRight: 40,
   },
   forward: {
-    marginRight: 45,
+    marginRight: 40,
   },
   shuffle: {
     marginTop: 0,
@@ -507,6 +647,7 @@ const styles = StyleSheet.create({
   sliderTrack: {
     height: 2,
     backgroundColor: '#333',
+    opacity: 0.5
   },
   sliderThumb: {
     width: 10,

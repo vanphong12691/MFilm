@@ -229,6 +229,8 @@ class HomeCell extends Component {
                 this.props.navigator.push({
                     id:Global.Constants.PLAY_ID,
                     data: responseData[0]['link'],
+                    type: responseData[0]['type'],
+                    quality: responseData,
                     name: this.props.data.vi
                 });
             }).catch(error=>{
@@ -252,6 +254,8 @@ class HomeCell extends Component {
             this.props.navigator.push({
                 id:Global.Constants.PLAY_ID,
                 data: responseData[0]['link'],
+                type: responseData[0]['type'],
+                quality: responseData,
                 pages: this.pages,
                 current: rowData.page,
                 max: this.pages.length,
