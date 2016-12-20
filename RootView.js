@@ -26,7 +26,7 @@ class RootView extends Component {
     return (
       <Navigator
         ref='navigator'
-        configureScene={(route, routeStack) => Navigator.SceneConfigs.FadeAndroid}
+        configureScene={(route, routeStack) => Navigator.SceneConfigs.FloatFromRight}
         initialRoute={{id: Global.Constants.HOME_ID}}
         renderScene={this.renderScene.bind(this)}
       />

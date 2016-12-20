@@ -122,7 +122,7 @@ class HomeCell extends Component {
                                     </View>
 
                                 </TouchableHighlight>}
-                                {this.state.watched && <Text style={{color:'white'}}>{'CHỌN TẬP ĐỂ XEM'}</Text>}
+                                {this.state.watched && <Text style={{color:'white'}}>{'CHỌN TẬP'}</Text>}
 
                             </View>
                         </View>
