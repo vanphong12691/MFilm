@@ -470,7 +470,7 @@ class Player extends Component {
           </View>
             <View style={{
               position: 'absolute',
-              left: 10,
+              left: 20,
               bottom: 10,
               right: 0,
             }}>
@@ -480,16 +480,16 @@ class Player extends Component {
             <View style={{
               position: 'absolute',
               bottom: 15,
-              right: 40,
+              right: 50,
             }}>
-              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpandQuality.bind(this)} name="ios-settings" size={20} color="#fff" />
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpandQuality.bind(this)} name="ios-settings" size={25} color="#fff" />
 
             </View>
 
-            {this.state.type >= "720p" && <View style={{
+            {(this.state.type == "720p" || this.state.type=="1080p") && <View style={{
               position: 'absolute',
-              bottom: 25,
-              right: 30,
+              bottom: 28,
+              right: 42,
               backgroundColor:'red',
               paddingLeft: 2,
               paddingRight: 2,
@@ -503,17 +503,17 @@ class Player extends Component {
             {this.state.changQuality&&<View style={{
             position: 'absolute',
             bottom: 25,
-            right: 45,
+            right: 55,
             backgroundColor: '#263238',
             padding: 5,
             width: 50,
             alignItems: 'center',
           }}>{quality.map((item, i) => {
             if(item['type'] == this.state.type){
-              return (<Text style={{color:'#D50000', fontWeight:'bold'}}>{item['type']}</Text>);
+              return (<Text style={{color:'#D50000', fontWeight:'bold', lineHeight: 22}}>{item['type']}</Text>);
             }else{
               return (
-                  <Text style={{color:'white'}} onPress={this._onPressQuality.bind(this, item)}>{item['type']}</Text>
+                  <Text style={{color:'white',lineHeight: 22}} onPress={this._onPressQuality.bind(this, item)}>{item['type']}</Text>
               )
             }
           })}
@@ -526,9 +526,9 @@ class Player extends Component {
             <View style={{
               position: 'absolute',
               bottom: 15,
-              right: 10,
+              right: 20,
             }}>
-              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpand.bind(this)} name="md-expand" size={20} color="#fff" />
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpand.bind(this)} name="md-expand" size={25} color="#fff" />
 
             </View>
           <View style={ styles.controls }>

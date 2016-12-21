@@ -38,6 +38,7 @@ class Hot extends Component
                     contentContainerStyle={styles.list}
                     dataSource={this.ds.cloneWithRows(this.props.data)}
                     renderRow={this._renderRow.bind(this)}
+                    enableEmptySections={true}
                 />
         )
     }

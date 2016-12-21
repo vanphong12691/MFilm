@@ -66,6 +66,7 @@ class MostView extends Component
                     contentContainerStyle={styles.list}
                     dataSource={this.ds.cloneWithRows(data)}
                     renderRow={this._renderRow.bind(this)}
+                    enableEmptySections={true}
                 />
         </View>
 
