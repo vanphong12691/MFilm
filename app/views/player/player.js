@@ -181,7 +181,11 @@ class Player extends Component {
 
   setTime(params){
     if( !this.state.sliding ){
-      this.setState({ currentTime: params.currentTime });
+      if((this.state.songDuration - params.currentTime < this.state.setting.phim_bo.end) && this.props.typeFilm=='phim_bo'){
+        this.goForward();
+      }else{
+        this.setState({ currentTime: params.currentTime });
+      }
     }
   }
 
