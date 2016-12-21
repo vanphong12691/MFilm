@@ -377,20 +377,21 @@ class Player extends Component {
               { forwardButtonV }
 
             </View>
-            <View style={ {width: this.state.widthSlider-80, marginBottom: 5} }>
-              <Slider
-                  onSlidingStart={ this.onSlidingStart.bind(this) }
-                  onSlidingComplete={ this.onSlidingComplete.bind(this) }
-                  onValueChange={ this.onSlidingChange.bind(this) }
-                  minimumTrackTintColor='#851c44'
-                  style={ styles.slider }
-                  trackStyle={ styles.sliderTrack }
-                  thumbStyle={ styles.sliderThumb }
-                  value={ songPercentage }/>
+            <View style={ {width: this.state.widthSlider-100} }>
 
-              <View style={ styles.timeInfo }>
-                <Text style={ styles.time }>{ formattedTime(this.state.currentTime)  }</Text>
-                <Text style={ styles.timeRight }>- { formattedTime( this.state.songDuration - this.state.currentTime ) }</Text>
+
+              <View style={ [styles.timeInfo,{alignItems:'center'}] }>
+                <Text style={{width: 30,color: '#FFF', fontSize: 10}}>{ formattedTime(this.state.currentTime)  }</Text>
+                <Slider
+                    onSlidingStart={ this.onSlidingStart.bind(this) }
+                    onSlidingComplete={ this.onSlidingComplete.bind(this) }
+                    onValueChange={ this.onSlidingChange.bind(this) }
+                    minimumTrackTintColor='#851c44'
+                    style={ {flex: 1, marginTop: 2} }
+                    trackStyle={ styles.sliderTrack }
+                    thumbStyle={ styles.sliderThumb }
+                    value={ songPercentage }/>
+                <Text style={ {width: 33,color: '#FFF', fontSize: 10, paddingLeft: 3} }>- { formattedTime( this.state.songDuration - this.state.currentTime ) }</Text>
               </View>
 
             </View>
@@ -400,14 +401,14 @@ class Player extends Component {
               bottom: 10,
               right: 40,
             }}>
-              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpandQuality.bind(this)} name="ios-settings" size={20} color="#fff" />
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpandQuality.bind(this)} name="ios-settings" size={25} color="#fff" />
 
             </View>
 
             {this.state.type >= "720p" && <View style={{
               position: 'absolute',
-              bottom: 20,
-              right: 30,
+              bottom: 25,
+              right: 35,
               backgroundColor:'red',
               paddingLeft: 2,
               paddingRight: 2,
@@ -420,18 +421,18 @@ class Player extends Component {
 
             {this.state.changQuality&&<View style={{
               position: 'absolute',
-              bottom: 20,
-              right: 45,
+              bottom: 25,
+              right: 47,
               backgroundColor: '#263238',
               padding: 5,
               width: 50,
               alignItems: 'center',
             }}>{quality.map((item, i) => {
               if(item['type'] == this.state.type){
-                return (<Text style={{color:'#D50000', fontWeight:'bold'}}>{item['type']}</Text>);
+                return (<Text style={{color:'#D50000', fontWeight:'bold', lineHeight: 22}}>{item['type']}</Text>);
               }else{
                 return (
-                    <Text style={{color:'white'}} onPress={this._onPressQuality.bind(this, item)}>{item['type']}</Text>
+                    <Text style={{color:'white',lineHeight: 22}} onPress={this._onPressQuality.bind(this, item)}>{item['type']}</Text>
                 )
               }
             })}
@@ -446,7 +447,7 @@ class Player extends Component {
               bottom: 10,
               right: 10,
             }}>
-              <Icon style={ {marginLeft: 0} } onPress={this._onPressCollapse.bind(this)} name="md-contract" size={20} color="#fff" />
+              <Icon style={ {marginLeft: 0} } onPress={this._onPressCollapse.bind(this)} name="md-contract" size={25} color="#fff" />
 
             </View>
           </View>}
