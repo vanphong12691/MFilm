@@ -477,7 +477,6 @@ class Player extends Component {
               position: 'absolute',
               left: 20,
               bottom: 10,
-              right: 0,
             }}>
               <Icon style={ {marginLeft: 0} } onPress={this._onPressBack.bind(this)} name="ios-arrow-back" size={30} color="#fff" />
 
