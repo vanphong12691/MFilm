@@ -17,7 +17,8 @@ import {
     ListView,
     ActivityIndicator,
     TouchableHighlight,
-    ScrollView
+    ScrollView,
+    AsyncStorage
 }from 'react-native';
 var styles = require('./index_style');
 var Global = require('../../common/global');
@@ -43,7 +44,7 @@ class HomeCell extends Component {
         data:Object,
     }
     componentDidMount(){
-            HomePresenter.getDetailFilm(this.props.data.href,this).then(responseData=>{
+        HomePresenter.getDetailFilm(this.props.data.href,this).then(responseData=>{
             this.setState({
                     information: responseData,
                     loading: false,
@@ -52,6 +53,18 @@ class HomeCell extends Component {
                 alert("Không thể kết nối đến máy chủ, vui lòng thử lại sau!");
 
         });
+        var _this = this;
+        AsyncStorage.getItem(Global.Constants.SEEN_STORE_KEY)
+            .then(value=>{
+                seen = [];
+                if(value){
+                    seen = JSON.parse(value);
+                }
+                _this.setState({
+                    seen: seen
+                })
+
+            });
     }
 
     render() {
@@ -130,9 +143,9 @@ class HomeCell extends Component {
                     </View>
                     <View style={{height:40, flexDirection:"row", backgroundColor: "#0288D1"}}>
                         <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
-                            <TouchableHighlight underlayColor="transparent"  >
+
                                 <Icon  name="ios-list" size={30} color="#fff" />
-                            </TouchableHighlight>
+
                         </View>
                         <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>LỊCH CHIẾU</Text></View>
                     </View>
@@ -151,9 +164,7 @@ class HomeCell extends Component {
                     }
                     <View style={{height:40, flexDirection:"row", backgroundColor: "#0288D1"}}>
                         <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
-                            <TouchableHighlight underlayColor="transparent"  >
                                 <Icon  name="ios-list" size={30} color="#fff" />
-                            </TouchableHighlight>
                         </View>
                         <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>NỘI DUNG PHIM</Text></View>
                     </View>
@@ -205,6 +216,22 @@ class HomeCell extends Component {
 
     }
     playFilm(){
+        if(!this.checkExists(this.props.data, this.state.seen)){
+            let list = this.state.seen;
+            list.push({
+                data: this.props.data,
+                chapter: []
+            });
+            this.setState({
+                seen: list
+            })
+        };
+
+        let seen  = this.state.seen;
+        AsyncStorage.setItem(Global.Constants.SEEN_STORE_KEY, JSON.stringify(seen))
+            .then(() => {})
+            .done();
+
         if(this.state.information.showing.startsWith("Tập") || (this.state.information.showing.contains("Full") && !this.state.information.showing.startsWith("Full HD"))){
             this.setState({
                 loading: true,
@@ -243,7 +270,20 @@ class HomeCell extends Component {
         }
 
 
+    }
 
+    checkExists(current, seen){
+        if(seen.length==0){
+            return false;
+        }else{
+
+            for(var i = 0; i<seen.length; i++){
+                if(seen[i].data.vi== current.vi || seen[i].en == current.en){
+                    return true;
+                }
+            }
+            return false;
+        }
 
     }
     _renderRow(rowData: object, sectionID: number, rowID: number){
@@ -253,7 +293,6 @@ class HomeCell extends Component {
     }
 
     onClickCell(rowData,event) {
-        console.log(rowData.link);
         HomePresenter.getLink(rowData.link,this.state.information.film_id,this).then(responseData=>{
             this.props.navigator.push({
                 id:Global.Constants.PLAY_ID,
