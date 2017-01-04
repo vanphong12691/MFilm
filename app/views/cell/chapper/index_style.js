@@ -36,11 +36,12 @@ module.exports = StyleSheet.create({
   },
   row: {
     justifyContent: 'center',
-    width: 30,
     height: 30,
     backgroundColor: '#F6F6F6',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#CCC'
+    borderColor: '#CCC',
+    paddingLeft: 5,
+    paddingRight: 5
   },
 });

@@ -232,7 +232,7 @@ class HomeCell extends Component {
                     type: responseData[0]['type'],
                     typeFilm: 'phim_le',
                     quality: responseData,
-                    name: this.props.data.vi
+                    name: this.props.data.vi,
                 });
             }).catch(error=>{
                 console.log(error);
@@ -260,6 +260,7 @@ class HomeCell extends Component {
                 typeFilm: 'phim_bo',
                 pages: this.pages,
                 current: rowData.page,
+                pageName: rowData.name,
                 max: this.pages.length,
                 film_id: this.state.information.film_id,
                 name: this.props.data.vi

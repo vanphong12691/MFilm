@@ -44,6 +44,7 @@ class Player extends Component {
       widthSlider: window.width - 40,
       showingController: true,
       current: this.props.current,
+      pageName: this.props.pageName,
       loading: true,
       vertical: true,
       changQuality: false,
@@ -99,6 +100,7 @@ class Player extends Component {
     name: React.PropTypes.string,
     type: React.PropTypes.string,
     typeFilm: React.PropTypes.string,
+    pageName: React.PropTypes.string,
   }
 
   componentWillUnmount(){
@@ -140,6 +142,7 @@ class Player extends Component {
           quality: responseData,
           currentTime: 0,
           next: true,
+          pageName: this.props.pages[current-2].name,
           back: parseInt(current)-1 > 1
         });
       });
@@ -160,6 +163,7 @@ class Player extends Component {
           quality: responseData,
           currentTime: 0,
           back: true,
+          pageName: this.props.pages[current].name,
           next: current+1 < this.props.max
         });
       });
@@ -329,7 +333,7 @@ class Player extends Component {
     }
     let title = this.props.name;
     if(this.props.max){
-      title += ' Tập ('+this.state.current+'/'+ this.props.max+')';
+      title += ' Tập ('+this.state.pageName+'/'+ this.props.max+')';
     }
 
     let quality;
@@ -395,7 +399,7 @@ class Player extends Component {
                     trackStyle={ styles.sliderTrack }
                     thumbStyle={ styles.sliderThumb }
                     value={ songPercentage }/>
-                <Text style={ {width: 33,color: '#FFF', fontSize: 10, paddingLeft: 3} }>- { formattedTime( this.state.songDuration - this.state.currentTime ) }</Text>
+                <Text style={ {color: '#FFF', fontSize: 10, paddingLeft: 3} }>- { formattedTime( this.state.songDuration - this.state.currentTime ) }</Text>
               </View>
 
             </View>
@@ -403,7 +407,7 @@ class Player extends Component {
             <View style={{
               position: 'absolute',
               bottom: 10,
-              right: 40,
+              right: 45,
             }}>
               <Icon style={ {marginLeft: 0} } onPress={this._onPressExpandQuality.bind(this)} name="ios-settings" size={25} color="#fff" />
 
@@ -412,7 +416,7 @@ class Player extends Component {
             {this.state.type >= "720p" && <View style={{
               position: 'absolute',
               bottom: 25,
-              right: 35,
+              right: 40,
               backgroundColor:'red',
               paddingLeft: 2,
               paddingRight: 2,
@@ -426,17 +430,18 @@ class Player extends Component {
             {this.state.changQuality&&<View style={{
               position: 'absolute',
               bottom: 25,
-              right: 47,
+              right: 55,
               backgroundColor: '#263238',
               padding: 5,
-              width: 50,
+              paddingLeft: 15,
+              paddingRight: 15,
               alignItems: 'center',
             }}>{quality.map((item, i) => {
               if(item['type'] == this.state.type){
-                return (<Text style={{color:'#D50000', fontWeight:'bold', lineHeight: 22}}>{item['type']}</Text>);
+                return (<Text style={{color:'#D50000', fontSize: 15, fontWeight:'bold', lineHeight: 25}}>{item['type']}</Text>);
               }else{
                 return (
-                    <Text style={{color:'white',lineHeight: 22}} onPress={this._onPressQuality.bind(this, item)}>{item['type']}</Text>
+                    <Text style={{color:'white',fontSize: 15,lineHeight: 25}} onPress={this._onPressQuality.bind(this, item)}>{item['type']}</Text>
                 )
               }
             })}
@@ -484,7 +489,7 @@ class Player extends Component {
             <View style={{
               position: 'absolute',
               bottom: 15,
-              right: 50,
+              right: 62,
             }}>
               <Icon style={ {marginLeft: 0} } onPress={this._onPressExpandQuality.bind(this)} name="ios-settings" size={25} color="#fff" />
 
@@ -493,7 +498,7 @@ class Player extends Component {
             {(this.state.type == "720p" || this.state.type=="1080p") && <View style={{
               position: 'absolute',
               bottom: 28,
-              right: 42,
+              right: 54,
               backgroundColor:'red',
               paddingLeft: 2,
               paddingRight: 2,
@@ -505,19 +510,21 @@ class Player extends Component {
             </View>}
 
             {this.state.changQuality&&<View style={{
-            position: 'absolute',
-            bottom: 25,
-            right: 55,
-            backgroundColor: '#263238',
-            padding: 5,
-            width: 50,
+              position: 'absolute',
+              bottom: 25,
+              right: 68,
+              backgroundColor: '#263238',
+              padding: 5,
+              paddingRight: 10,
+              paddingLeft: 10,
+
             alignItems: 'center',
           }}>{quality.map((item, i) => {
             if(item['type'] == this.state.type){
-              return (<Text style={{color:'#D50000', fontWeight:'bold', lineHeight: 22}}>{item['type']}</Text>);
+              return (<Text style={{color:'#D50000', fontSize: 15, fontWeight:'bold', lineHeight: 25}}>{item['type']}</Text>);
             }else{
               return (
-                  <Text style={{color:'white',lineHeight: 22}} onPress={this._onPressQuality.bind(this, item)}>{item['type']}</Text>
+                  <Text style={{color:'white',fontSize: 15, lineHeight: 25}} onPress={this._onPressQuality.bind(this, item)}>{item['type']}</Text>
               )
             }
           })}
@@ -527,11 +534,11 @@ class Player extends Component {
 
 
 
-            <View style={{
+          <View style={{
               position: 'absolute',
               bottom: 15,
               right: 20,
-            }}>
+          }}>
               <Icon style={ {marginLeft: 0} } onPress={this._onPressExpand.bind(this)} name="md-expand" size={25} color="#fff" />
 
             </View>
