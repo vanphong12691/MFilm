@@ -56,7 +56,7 @@ class HomeCell extends Component {
 
     render() {
         return (
-            <View style={{backgroundColor: 'white', height: Global.Constants.HEIGHT_SCREEN}}>
+            <View style={{backgroundColor: '#263238', height: Global.Constants.HEIGHT_SCREEN}}>
                 <View style={{height:40, flexDirection:"row"}}>
                     <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
                         <TouchableHighlight underlayColor="transparent"  style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}} onPress={this.onBack.bind(this)}>
@@ -66,40 +66,40 @@ class HomeCell extends Component {
                     <View style={{flex: 1}}><Header title={this.props.data.vi}/></View>
                 </View>
                 <ScrollView>
-                    <View style={{height: 300, backgroundColor :'red', flexDirection: 'row'}}>
+                    <View style={{height: 300, backgroundColor :'#263238', flexDirection: 'row'}}>
 
                         <Image style={{width: 180, height: 300}} source={{uri: this.props.data.picture}}></Image>
-                        <View style={{flex: 1, backgroundColor: "#FAFAFA", padding: 10, flexDirection:'column'}}>
+                        <View style={{flex: 1, backgroundColor: "#263238", padding: 10, flexDirection:'column'}}>
                             <Text style={{fontSize: 16,lineHeight: 20, color: '#304FFE', fontWeight:'bold'}} numberOfLines={1} ellipsizeMode={'tail'}>{this.props.data.en}</Text>
 
                             <Text numberOfLines={1} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#546E7A'}}>Đang phát: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20, color: '#424242'}}>{this.state.information.showing}</Text>
+                                <Text style={{color:'#B3E5FC'}}>Đang phát: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20, color: 'white'}}>{this.state.information.showing}</Text>
                             </Text>
                             <Text numberOfLines={1} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#546E7A'}}>Sắp chiếu: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}}>{this.state.information.preShow}</Text>
+                                <Text style={{color:'#B3E5FC'}}>Sắp chiếu: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}}>{this.state.information.preShow}</Text>
                             </Text>
 
                             <Text numberOfLines={5} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#546E7A'}}>Diễn viên: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}}>{this.convertArray(this.state.information.actor)}</Text>
+                                <Text style={{color:'#B3E5FC'}}>Diễn viên: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}}>{this.convertArray(this.state.information.actor)}</Text>
                             </Text>
                             <Text numberOfLines={2} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#546E7A'}}>Quốc gia: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}}>{this.convertArray(this.state.information.country)}</Text>
+                                <Text style={{color:'#B3E5FC'}}>Quốc gia: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}}>{this.convertArray(this.state.information.country)}</Text>
                             </Text>
                             <Text numberOfLines={1} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#546E7A'}}>Thời lượng: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} >Thời lượng: {this.state.information.duration}</Text>
+                                <Text style={{color:'#B3E5FC'}}>Thời lượng: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}} >{this.state.information.duration}</Text>
                             </Text>
                             <Text numberOfLines={1} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#546E7A'}}>Lượt xem: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} >{this.state.information.view}</Text>
+                                <Text style={{color:'#B3E5FC'}}>Lượt xem: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}} >{this.state.information.view}</Text>
                             </Text>
                             <Text numberOfLines={1} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#546E7A'}}>Năm SX: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: '#424242'}} >{this.state.information.year}</Text>
+                                <Text style={{color:'#B3E5FC'}}>Năm SX: </Text>
+                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}} >{this.state.information.year}</Text>
                             </Text>
 
 
@@ -128,16 +128,16 @@ class HomeCell extends Component {
                         </View>
 
                     </View>
-                    <View style={{height:40, flexDirection:"row", backgroundColor: "#03A9F4"}}>
-                        <View style={{backgroundColor: "#03A9F4",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
+                    <View style={{height:40, flexDirection:"row", backgroundColor: "#0288D1"}}>
+                        <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
                             <TouchableHighlight underlayColor="transparent"  >
                                 <Icon  name="ios-list" size={30} color="#fff" />
                             </TouchableHighlight>
                         </View>
                         <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>LỊCH CHIẾU</Text></View>
                     </View>
-                    <View style={{backgroundColor :'#FAFAFA', padding: 10}}>
-                        <Text style={{lineHeight: 20, color: "#424242", paddingTop: 5, paddingBottom: 5}}>{this.state.information.lc}</Text>
+                    <View style={{backgroundColor :'#263238', padding: 10}}>
+                        <Text style={{lineHeight: 20, color: "white", paddingTop: 5, paddingBottom: 5}}>{this.state.information.lc}</Text>
                     </View>
                     {this.state.watched && <View style={{flex: 0.20, padding: 1}}>
                         <ListView
@@ -149,15 +149,15 @@ class HomeCell extends Component {
 
                     </View>
                     }
-                    <View style={{height:40, flexDirection:"row", backgroundColor: "#03A9F4"}}>
-                        <View style={{backgroundColor: "#03A9F4",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
+                    <View style={{height:40, flexDirection:"row", backgroundColor: "#0288D1"}}>
+                        <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
                             <TouchableHighlight underlayColor="transparent"  >
                                 <Icon  name="ios-list" size={30} color="#fff" />
                             </TouchableHighlight>
                         </View>
                         <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>NỘI DUNG PHIM</Text></View>
                     </View>
-                    <View style={{backgroundColor :'#FAFAFA', padding: 10}}>
+                    <View style={{backgroundColor :'#263238', padding: 10}}>
                         {this.convertToPicture(this.state.information.content)}
                     </View>
 
@@ -194,11 +194,11 @@ class HomeCell extends Component {
             data = content.split("--IMAGE--");
             for(var i=0;i< data.length-1; i++){
 
-                result.push(<Text style={{lineHeight: 20, color: "#424242", paddingTop: 5, paddingBottom: 5}}>{data[i]}</Text>)
+                result.push(<Text style={{lineHeight: 20, color: "white", paddingTop: 5, paddingBottom: 5}}>{data[i]}</Text>)
                 result.push(<Image style={{width: Constant.WIDTH_SCREEN-20,height: (Constant.WIDTH_SCREEN-20)*0.8, borderWidth: 1, borderColor: "#ecf0f1"}} source={{uri: this.state.information.image[i]}}></Image>)
 
             }
-            result.push(<Text style={{lineHeight: 20, color: "#424242", paddingTop: 5, paddingBottom: 5}}>{data[data.length-1]}</Text>)
+            result.push(<Text style={{lineHeight: 20, color: "white", paddingTop: 5, paddingBottom: 5}}>{data[data.length-1]}</Text>)
         }
         return result;
 

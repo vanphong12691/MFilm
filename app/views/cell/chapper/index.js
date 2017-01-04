@@ -30,7 +30,7 @@ class HomeCell extends Component {
         if(this.props.data){
             return (
                 <TouchableHighlight onPress={this.props.onClickCell} style={{  margin: 4,
-                    height: 30,}}>
+                    height: 25,}}>
                     <View style={styles.row}>
                         <Text style={{color: '#455A64'}}>{this.props.data['name']}</Text>
                      </View>

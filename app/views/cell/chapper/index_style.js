@@ -36,7 +36,7 @@ module.exports = StyleSheet.create({
   },
   row: {
     justifyContent: 'center',
-    height: 30,
+    height: 25,
     backgroundColor: '#F6F6F6',
     alignItems: 'center',
     borderWidth: 1,
