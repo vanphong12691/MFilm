@@ -259,7 +259,9 @@ class Page extends Component
                                     <Icon  name="ios-search" size={25} color="#fff" />
                                 </TouchableHighlight>
                             </View>
-                            <Menu id={this.state.id} type={this.state.type} onItemSelected={this.onMenuOpen.bind(this)} />
+                            <View style={{height: Global.Constants.HEIGHT_SCREEN-85}}>
+                                <Menu id={this.state.id} type={this.state.type} onItemSelected={this.onMenuOpen.bind(this)} />
+                            </View>
                         </View>
                     </View>
 
