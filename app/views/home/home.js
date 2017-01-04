@@ -137,14 +137,14 @@ class Page extends Component
 
                             <ScrollView>
                                 <HomeSlider onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.slider}/>
-                                {this.state.loaded && <View style={{height:40, flexDirection:"row", backgroundColor: "#03A9F4"}}>
-                                    <View style={{backgroundColor: "#03A9F4",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
+                                {this.state.loaded && <View style={{height:40, flexDirection:"row", backgroundColor: "#2980b9"}}>
+                                    <View style={{backgroundColor: "#2980b9",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
                                         <TouchableHighlight underlayColor="transparent"  >
                                             <Icon  name="ios-list" size={30} color="#fff" />
                                         </TouchableHighlight>
                                     </View>
                                     <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>Phim bộ mới cập nhật</Text></View>
-                                    <View style={{backgroundColor: "#03A9F4", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
+                                    <View style={{backgroundColor: "#2980b9", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
                                         <TouchableHighlight underlayColor="transparent" onPress={this._onPressList.bind(this,0)} >
                                             <Icon  name="ios-arrow-dropright" size={30} color="#fff" />
                                         </TouchableHighlight>
@@ -417,6 +417,9 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap'
     },
+    card:{
+        backgroundColor: '#263238'
+    }
 
 });
 module.exports = Page;

@@ -114,7 +114,7 @@ var styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     container: {
-        backgroundColor: 'white'
+        backgroundColor: '#263238'
     },
     dot: {
         backgroundColor: 'rgba(255,255,255,.3)',
