@@ -32,7 +32,7 @@ class TypeCell extends Component {
             return (
                 <TouchableWithoutFeedback onPress={this.props.onClickCell}>
                     <View style={styles.row}>
-                            <Text>{this.props.data.name}</Text>
+                            <Text style={{color: '#81D4FA', fontSize: 15}}>{this.props.data.name}</Text>
                     </View>
                 </TouchableWithoutFeedback>
             );

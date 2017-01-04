@@ -80,7 +80,7 @@ class PageHome extends Component
     }
 
     render(){
-        const menu = <Menu id={this.state.id} type={this.state.type} onItemSelected={this.onMenuOpen.bind(this)} />;
+        const menu = <Menu id={this.state.id} onMenuSelected={this.onMenuSelected.bind(this)} type={this.state.type} onItemSelected={this.onMenuOpen.bind(this)} />;
         return (
             <SideMenu
                 menu={menu}
@@ -120,6 +120,79 @@ class PageHome extends Component
 
 
         )
+    }
+
+    onMenuSelected(name){
+        let data;
+        switch(name){
+            case 'home':
+                this.props.navigator.push({
+                    id:Global.Constants.HOME_ID,
+                });
+                break;
+            case 'seen':
+                this.props.navigator.push({
+                    id:Global.Constants.SEEN_ID,
+                });
+                break;
+            case 'like':
+                this.props.navigator.push({
+                    id:Global.Constants.LIKE_ID,
+                });
+                break;
+            case 'search':
+                this.props.navigator.push({
+                    id:Global.Constants.SEARCH_ID
+                })
+                break;
+            case 'setting':
+                this.props.navigator.push({
+                    id:Global.Constants.SETTING_ID
+                })
+                break;
+            case 'movie':
+                data = {
+                    type : "danh-sach/phim-le.html",
+                    title: "Phim lẻ"
+                };
+                this.props.navigator.push({
+                    id:Global.Constants.H_PAGE_ID,
+                    data: data
+                });
+                break;
+
+            case 'movies':
+                data = {
+                    type : "danh-sach/phim-bo.html",
+                    title: "Phim bộ"
+                };
+                this.props.navigator.push({
+                    id:Global.Constants.H_PAGE_ID,
+                    data: data
+                });
+                break;
+            case 'cartoon':
+                data = {
+                    type : "the-loai/hoat-hinh-55.html",
+                    title: "Phim hoạt hình"
+                };
+                this.props.navigator.push({
+                    id:Global.Constants.H_PAGE_ID,
+                    data: data
+                });
+                break;
+            case 'cinema':
+                data = {
+                    type : "the-loai/chieu-rap-56.html",
+                    title: "Phim chiếu rạp"
+                };
+                this.props.navigator.push({
+                    id:Global.Constants.H_PAGE_ID,
+                    data: data
+                });
+                break;
+
+        }
     }
     onBackHome(){
         this.props.navigator.pop();

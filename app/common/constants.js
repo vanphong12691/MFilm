@@ -21,3 +21,5 @@ exports.PAGE_ID = 5;
 exports.H_PAGE_ID = 6;
 exports.SEARCH_ID = 7;
 exports.SETTING_ID = 8;
+exports.SEEN_ID = 9;
+exports.LIKE_ID = 10;

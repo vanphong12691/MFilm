@@ -215,8 +215,11 @@ class Page extends Component
                                     <Icon  name="ios-search" size={25} color="#fff" />
                                 </TouchableHighlight>
                             </View>
+                            <View style={{height: Global.Constants.HEIGHT_SCREEN-85}}>
+                                <MostView onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.mostView}></MostView>
+                            </View>
 
-                            <MostView onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.mostView}></MostView>
+
                             {this.state.loading&&<View style={styles.centering}>
                                 <ActivityIndicator
                                     animating = {true}
@@ -228,11 +231,11 @@ class Page extends Component
                     </View>
 
 
-                    <View tabLabel="ios-film" style={styles.tabView}>
+                    <View tabLabel="ios-easel" style={styles.tabView}>
                         <View style={styles.card}>
                             <View style={{height: 40, justifyContent: 'center',  backgroundColor: '#0288D1', flexDirection: 'row'}}>
                                 <TouchableHighlight underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
-                                    <Icon  name="ios-film" size={25} color="#fff" />
+                                    <Icon  name="ios-easel" size={25} color="#fff" />
                                 </TouchableHighlight>
                                 <View style={{flex:1, justifyContent: 'center'}}><Text style={{color: 'white', fontSize: 16}} >{'PHIM CHIẾU RẠP MỚI NHẤT'}</Text></View>
                                 <TouchableHighlight onPress={this.onPressSearch.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
@@ -254,13 +257,13 @@ class Page extends Component
                                 <TouchableHighlight underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
                                     <Icon  name="ios-menu" size={25} color="#fff" />
                                 </TouchableHighlight>
-                                <View style={{flex:1, justifyContent: 'center'}}><Text style={{color: 'white', fontSize: 16}} >{'KHÁC'}</Text></View>
+                                <View style={{flex:1, justifyContent: 'center'}}><Text style={{color: 'white', fontSize: 16}} >{'MENU'}</Text></View>
                                 <TouchableHighlight onPress={this.onPressSearch.bind(this)} underlayColor="transparent" style={{height: 40, width: 40,alignItems: 'center', justifyContent: 'center'}} >
                                     <Icon  name="ios-search" size={25} color="#fff" />
                                 </TouchableHighlight>
                             </View>
                             <View style={{height: Global.Constants.HEIGHT_SCREEN-85}}>
-                                <Menu id={this.state.id} type={this.state.type} onItemSelected={this.onMenuOpen.bind(this)} />
+                                <Menu id={this.state.id} type={this.state.type} onItemSelected={this.onMenuOpen.bind(this)} onMenuSelected={this.onMenuSelected.bind(this)} />
                             </View>
                         </View>
                     </View>
@@ -303,6 +306,79 @@ class Page extends Component
             id:Global.Constants.DETAIL_ID,
             data: data
         });
+    }
+
+    onMenuSelected(name){
+        let data;
+        switch(name){
+            case 'home':
+                this.props.navigator.push({
+                    id:Global.Constants.HOME_ID,
+                });
+                break;
+            case 'seen':
+                this.props.navigator.push({
+                    id:Global.Constants.SEEN_ID,
+                });
+                break;
+            case 'like':
+                this.props.navigator.push({
+                    id:Global.Constants.LIKE_ID,
+                });
+                break;
+            case 'search':
+                this.props.navigator.push({
+                    id:Global.Constants.SEARCH_ID
+                })
+                break;
+            case 'setting':
+                this.props.navigator.push({
+                    id:Global.Constants.SETTING_ID
+                })
+                break;
+            case 'movie':
+                data = {
+                    type : "danh-sach/phim-le.html",
+                    title: "Phim lẻ"
+                };
+                this.props.navigator.push({
+                    id:Global.Constants.H_PAGE_ID,
+                    data: data
+                });
+                break;
+
+            case 'movies':
+                data = {
+                    type : "danh-sach/phim-bo.html",
+                    title: "Phim bộ"
+                };
+                this.props.navigator.push({
+                    id:Global.Constants.H_PAGE_ID,
+                    data: data
+                });
+                break;
+            case 'cartoon':
+                data = {
+                    type : "the-loai/hoat-hinh-55.html",
+                    title: "Phim hoạt hình"
+                };
+                this.props.navigator.push({
+                    id:Global.Constants.H_PAGE_ID,
+                    data: data
+                });
+                break;
+            case 'cinema':
+                data = {
+                    type : "the-loai/chieu-rap-56.html",
+                    title: "Phim chiếu rạp"
+                };
+                this.props.navigator.push({
+                    id:Global.Constants.H_PAGE_ID,
+                    data: data
+                });
+                break;
+
+        }
     }
 
     _onPressMenu(){

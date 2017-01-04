@@ -19,6 +19,8 @@ var PlayView = require('./app/views/player/player');
 var HPageView = require('./app/views/phome/phome');
 var SearchView = require('./app/views/search/search');
 var SettingView = require('./app/views/setting/setting');
+var SeenView = require('./app/views/seen/seen');
+var LikeView = require('./app/views/like/like');
 var Global = require('./app/common/global');
 
 class RootView extends Component {
@@ -58,6 +60,10 @@ class RootView extends Component {
         return (<SearchView navigator={navigator}/>);
       case Global.Constants.SETTING_ID:
         return (<SettingView navigator={navigator}/>);
+      case Global.Constants.SEEN_ID:
+        return (<SeenView navigator={navigator}/>);
+      case Global.Constants.LIKE_ID:
+        return (<LikeView navigator={navigator}/>);
       default:
     }
   }
