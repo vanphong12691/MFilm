@@ -86,7 +86,7 @@ class HomeCell extends Component {
     }
     clickUnlike(){
         let list =  this.state.like;
-        let index  = this.getIndexList(this.props.data,list);
+        let index  = this.getIndexList(this.state.information.film_id,list);
         if(index>=0){
             list.splice(index,1);
         }
@@ -101,6 +101,7 @@ class HomeCell extends Component {
     clickLike(){
         let like  = this.state.like;
         like.push({
+            id: this.state.information.film_id,
             data: this.props.data,
             chapter: []
         });
@@ -266,9 +267,10 @@ class HomeCell extends Component {
 
     }
     playFilm(){
-        if(!this.checkExists(this.props.data, this.state.seen)){
+        if(!this.checkExists(this.state.information.film_id, this.state.seen)){
             let list = this.state.seen;
             list.push({
+                id: this.state.information.film_id,
                 data: this.props.data,
                 chapter: []
             });
@@ -322,13 +324,13 @@ class HomeCell extends Component {
 
     }
 
-    getIndexList(current, seen){
+    getIndexList(id, seen){
         if(seen.length==0){
             return -1;
         }else{
 
             for(var i = 0; i<seen.length; i++){
-                if(seen[i].data.vi== current.vi || seen[i].en == current.en){
+                if(seen[i].data.vi== id){
                     return i;
                 }
             }
@@ -336,13 +338,13 @@ class HomeCell extends Component {
         }
     }
 
-    checkExists(current, seen){
+    checkExists(id, seen){
         if(seen.length==0){
             return false;
         }else{
 
             for(var i = 0; i<seen.length; i++){
-                if(seen[i].data.vi== current.vi || seen[i].en == current.en){
+                if(seen[i].data.vi== id){
                     return true;
                 }
             }
