@@ -378,6 +378,7 @@ class Player extends Component {
               alignItems: 'center',
               flexDirection: 'row',
               marginTop: 0,
+              opacity: 0.8
             }}>
 
               { backwardButtonV }

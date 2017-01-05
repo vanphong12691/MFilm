@@ -16,6 +16,7 @@ import {
 var Global = require('../../common/global');
 var SeenCell = require('../cell/seen/index');
 import Icon from 'react-native-vector-icons/Ionicons';
+import { SwipeListView } from 'react-native-swipe-list-view';
 var Header = require('../../component/header/index');
 
 class Seen extends Component
@@ -46,7 +47,7 @@ class Seen extends Component
 
     render(){
         return (
-            <View style={{flex:1, backgroundColor: "white"}}>
+            <View style={{flex:1, backgroundColor: "#263238"}}>
                 <View style={{height:40, flexDirection:"row"}}>
                     <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
                         <TouchableHighlight underlayColor="transparent"  onPress={this.onBackHome.bind(this)} style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
@@ -57,7 +58,7 @@ class Seen extends Component
                     <View style={{width: 40, backgroundColor: '#0288D1'}}></View>
                 </View>
 
-                <ListView
+                <SwipeListView
                     contentContainerStyle={styles.list}
                     dataSource={this.ds.cloneWithRows(this.state.data)}
                     renderRow={this._renderRow.bind(this)}
@@ -74,7 +75,7 @@ class Seen extends Component
 
     _renderRow(rowData: object, sectionID: number, rowID: number){
         return (
-            <SeenCell data={rowData} onClickCell={this.onClickCell.bind(this, rowData)}/>
+            <SeenCell data={rowData} onClickCell={this.onClickCell.bind(this, rowData)} onClickDelete={this.onClickDelete.bind(this, rowData, rowID)}/>
         )
     }
     onClickCell(rowData,event){
@@ -82,6 +83,16 @@ class Seen extends Component
             id:Global.Constants.DETAIL_ID,
             data: rowData.data
         });
+    }
+    onClickDelete(rowData,rowId,event){
+        let dt = this.state.data;
+        dt.splice(rowId,1);
+        AsyncStorage.setItem(Global.Constants.SEEN_STORE_KEY, JSON.stringify(dt))
+            .then(() => {})
+            .done();
+        this.setState({
+            data: dt
+        })
     }
 
 }
