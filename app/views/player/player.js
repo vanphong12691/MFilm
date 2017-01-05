@@ -65,6 +65,18 @@ class Player extends Component {
             })
           }
         });
+
+    var _this = this;
+    AsyncStorage.getItem(Global.Constants.SEEN_STORE_KEY)
+        .then(value=>{
+          let seen = [];
+          if(value){
+            seen = JSON.parse(value);
+          }
+          _this.setState({
+            seen: seen
+          })
+        });
   }
 
   _updateOrientation(or) {
@@ -103,7 +115,49 @@ class Player extends Component {
     pageName: React.PropTypes.string,
   }
 
+  checkExitsPage(name, chapter){
+
+    for(var i=0; i< chapter.length; i++){
+      if(name == chapter[i].name){
+
+        return true;
+      }
+    }
+    return false;
+  }
+  getIndexPage(name, chapter){
+    for(var i=0; i<chapter.length; i++){
+      if(name == chapter[i].name){
+        return i;
+      }
+    }
+    return -1;
+
+  }
+
   componentWillUnmount(){
+    let list = this.state.seen;
+    let index = this.getIndexList(this.props.film_id, list);
+    console.log('INDEX', index);
+    if(index>=0){
+      if(this.checkExitsPage(this.state.pageName, list[index].chapter)){
+        let id = this.getIndexPage(this.state.pageName, list[index].chapter);
+        if(id>=0){
+          list[index]['chapter'][id].time = this.state.currentTime > 3? this.state.currentTime-3 : this.state.currentTime
+        }
+
+      }else{
+        list[index]['chapter'].push({
+          name: this.state.pageName ,
+          page: this.state.current,
+          time: this.state.currentTime > 3? this.state.currentTime-3 : this.state.currentTime
+        })
+      }
+
+    }
+    AsyncStorage.setItem(Global.Constants.SEEN_STORE_KEY, JSON.stringify(list))
+        .then(() => {})
+        .done();
     Orientation.removeOrientationListener(this._updateOrientation);
     KeepAwake.deactivate();
     Orientation.lockToPortrait();
@@ -203,6 +257,17 @@ class Player extends Component {
       if(this.state.setting['phim_bo']['begin'] && this.props.typeFilm == 'phim_bo'){
         this.refs.video.seek(this.state.setting['phim_bo']['begin']);
       }
+      let list = this.state.seen;
+      let index = this.getIndexList(this.props.film_id, list);
+      if(index>=0){
+        if(this.checkExitsPage(this.state.pageName, list[index].chapter)){
+          let id = this.getIndexPage(this.state.pageName, list[index].chapter);
+          if(id>=0){
+            this.refs.video.seek(list[index]['chapter'][id].time);
+          }
+        }
+      }
+
     }
     this.setState({
       songDuration: params.duration,
@@ -259,6 +324,22 @@ class Player extends Component {
       })
     }, 5000);
   }
+
+  getIndexList(id, seen){
+    console.log('ID, SEEN', seen);
+    if(seen.length==0){
+      return -1;
+    }else{
+
+      for(var i = 0; i<seen.length; i++){
+        if(seen[i].id== id){
+          return i;
+        }
+      }
+      return -1;
+    }
+  }
+
 
   render() {
     let songPercentage;
