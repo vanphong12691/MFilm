@@ -56,7 +56,7 @@ class HomeCell extends Component {
         var _this = this;
         AsyncStorage.getItem(Global.Constants.SEEN_STORE_KEY)
             .then(value=>{
-                seen = [];
+                let seen = [];
                 if(value){
                     seen = JSON.parse(value);
                 }
@@ -65,8 +65,53 @@ class HomeCell extends Component {
                 })
 
             });
-    }
 
+        AsyncStorage.getItem(Global.Constants.LIKE_STORE_KEY)
+            .then(value=>{
+                let like = [];
+                if(value){
+                    like = JSON.parse(value);
+                }
+                let isLike = false;
+
+                if(_this.checkExists(this.props.data, like)){
+                    isLike = true;
+                }
+                _this.setState({
+                    like: like,
+                    isLike: isLike
+                })
+
+            });
+    }
+    clickUnlike(){
+        let list =  this.state.like;
+        let index  = this.getIndexList(this.props.data,list);
+        if(index>=0){
+            list.splice(index,1);
+        }
+        AsyncStorage.setItem(Global.Constants.LIKE_STORE_KEY, JSON.stringify(list))
+            .then(() => {})
+            .done();
+        this.setState({
+            isLike: false
+        })
+
+    }
+    clickLike(){
+        let like  = this.state.like;
+        like.push({
+            data: this.props.data,
+            chapter: []
+        });
+        AsyncStorage.setItem(Global.Constants.LIKE_STORE_KEY, JSON.stringify(like))
+            .then(() => {})
+            .done();
+        this.setState({
+            isLike: true
+        })
+
+    }
     render() {
         return (
             <View style={{backgroundColor: '#263238', height: Global.Constants.HEIGHT_SCREEN}}>
@@ -83,7 +128,7 @@ class HomeCell extends Component {
 
                         <Image style={{width: 180, height: 300}} source={{uri: this.state.information.thumbnailUrl}}></Image>
                         <View style={{flex: 1, backgroundColor: "#263238", padding: 10, flexDirection:'column'}}>
-                            <Text style={{fontSize: 16,lineHeight: 20, color: '#304FFE', fontWeight:'bold'}} numberOfLines={1} ellipsizeMode={'tail'}>{this.props.data.en}</Text>
+                            <Text style={{fontSize: 16,lineHeight: 20, color: 'white', fontWeight:'bold'}} numberOfLines={1} ellipsizeMode={'tail'}>{this.props.data.en}</Text>
 
                             <Text numberOfLines={1} ellipsizeMode={'tail'}>
                                 <Text style={{color:'#B3E5FC'}}>Đang phát: </Text>
@@ -121,21 +166,26 @@ class HomeCell extends Component {
 
                             <View style={{
                                 position: 'absolute',
-                                left: 40,
-                                right:40,
                                 bottom:10,
                                 height: 30,
-                                backgroundColor: '#F44336',
                                 justifyContent: 'center',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                flexDirection: 'row'
                             }}>
-                                {!this.state.watched && <TouchableHighlight underlayColor="transparent" onPress={!this.state.loading&&this.playFilm.bind(this)}>
-                                    <View>
-                                        <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>{"XEM PHIM"}</Text>
-                                    </View>
+                                <View style={{width: 30}}>
+                                    {this.state.isLike && <Icon onPress={this.clickUnlike.bind(this)} name="ios-heart" size={28} color="#E91E63" />}
+                                    {!this.state.isLike && <Icon  onPress={this.clickLike.bind(this)} name="ios-heart-outline" size={28} color="#E91E63" />}
+                                </View>
+                                <View style={{width: 100, borderRadius: 5, backgroundColor: '#0D47A1', justifyContent: 'center', alignItems:'center'}}>
+                                    {!this.state.watched && <TouchableHighlight underlayColor="transparent" onPress={!this.state.loading&&this.playFilm.bind(this)}>
+                                        <View>
+                                            <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>{"XEM PHIM"}</Text>
+                                        </View>
 
-                                </TouchableHighlight>}
-                                {this.state.watched && <Text style={{color:'white'}}>{'CHỌN TẬP'}</Text>}
+                                    </TouchableHighlight>}
+                                    {this.state.watched && <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>{'CHỌN TẬP'}</Text>}
+                                </View>
+
 
                             </View>
                         </View>
@@ -270,6 +320,20 @@ class HomeCell extends Component {
         }
 
 
+    }
+
+    getIndexList(current, seen){
+        if(seen.length==0){
+            return -1;
+        }else{
+
+            for(var i = 0; i<seen.length; i++){
+                if(seen[i].data.vi== current.vi || seen[i].en == current.en){
+                    return i;
+                }
+            }
+            return -1;
+        }
     }
 
     checkExists(current, seen){
