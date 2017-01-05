@@ -81,7 +81,7 @@ class HomeCell extends Component {
                 <ScrollView>
                     <View style={{height: 300, backgroundColor :'#263238', flexDirection: 'row'}}>
 
-                        <Image style={{width: 180, height: 300}} source={{uri: this.props.data.picture}}></Image>
+                        <Image style={{width: 180, height: 300}} source={{uri: this.state.information.thumbnailUrl}}></Image>
                         <View style={{flex: 1, backgroundColor: "#263238", padding: 10, flexDirection:'column'}}>
                             <Text style={{fontSize: 16,lineHeight: 20, color: '#304FFE', fontWeight:'bold'}} numberOfLines={1} ellipsizeMode={'tail'}>{this.props.data.en}</Text>
 

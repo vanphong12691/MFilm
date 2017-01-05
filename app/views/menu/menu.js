@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
     },
     item: {
         fontSize: 18,
-        paddingTop: 4,
-        paddingBottom: 4,
+        paddingTop: 7,
+        paddingBottom: 7,
         color: '#81D4FA',
         justifyContent:'center',
     },
