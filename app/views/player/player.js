@@ -69,7 +69,7 @@ class Player extends Component {
 
   _updateOrientation(or) {
 
-    var delay=1000;
+    var delay=10;
     var _this=this;
     setTimeout(function() {
       if(or == "LANDSCAPE"){
