@@ -313,6 +313,9 @@ class HomeCell extends Component {
                     data: responseData[0]['link'],
                     type: responseData[0]['type'],
                     typeFilm: 'phim_le',
+                    current: 1,
+                    film_id: this.state.information.film_id,
+                    pageName: 'FullHD',
                     quality: responseData,
                     name: this.props.data.vi,
                 });

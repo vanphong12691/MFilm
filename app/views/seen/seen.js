@@ -35,6 +35,7 @@ class Seen extends Component
                 var setting;
                 if(value){
                     setting = JSON.parse(value);
+                    console.log('SETTING_DAXEM', setting);
                 }
                 this.setState({
                     data:setting,
