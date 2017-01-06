@@ -183,6 +183,20 @@ class Player extends Component {
   }
 
   goBackward(){
+
+    let list = this.state.seen;
+    let index = this.getIndexList(this.props.film_id, list);
+    if(index>=0){
+      if(this.checkExitsPage(this.state.pageName, list[index].chapter)){
+        let id = this.getIndexPage(this.state.pageName, list[index].chapter);
+        if(id>=0){
+          list[index].chapter.splice(id,1);
+          this.setState({
+            seen:list,
+          })
+        }
+      }
+    }
     clearTimeout(hiddenController);
     let current = this.state.current;
     this.setState({
@@ -204,6 +218,20 @@ class Player extends Component {
   }
 
   goForward(){
+    let list = this.state.seen;
+    let index = this.getIndexList(this.props.film_id, list);
+    if(index>=0){
+      if(this.checkExitsPage(this.state.pageName, list[index].chapter)){
+        let id = this.getIndexPage(this.state.pageName, list[index].chapter);
+        if(id>=0){
+          list[index].chapter.splice(id,1);
+          this.setState({
+            seen:list,
+          })
+        }
+      }
+    }
+
     clearTimeout(hiddenController);
     this.setState({
       loading: true
