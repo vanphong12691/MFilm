@@ -393,23 +393,23 @@ class Player extends Component {
 
     let forwardButtonV;
     if( !this.state.next){
-      forwardButtonV = <Icon style={ styles.forward } name="ios-skip-forward" size={50} color="transparent" />;
+      forwardButtonV = <Icon style={ styles.forward } name="ios-skip-forward" size={30} color="transparent" />;
     } else {
-      forwardButtonV = <Icon onPress={ this.goForward.bind(this) } style={ styles.forward } name="ios-skip-forward" size={50} color="#fff" />;
+      forwardButtonV = <Icon onPress={ this.goForward.bind(this) } style={ styles.forward } name="ios-skip-forward" size={30} color="#fff" />;
     }
 
     let backwardButtonV;
     if( !this.state.back){
-      backwardButtonV = <Icon style={ styles.back } name="ios-skip-backward" size={50} color="transparent" />
+      backwardButtonV = <Icon style={ styles.back } name="ios-skip-backward" size={30} color="transparent" />
     } else {
-      backwardButtonV = <Icon onPress={ this.goBackward.bind(this) } style={ styles.back } name="ios-skip-backward" size={50} color="#fff" />;
+      backwardButtonV = <Icon onPress={ this.goBackward.bind(this) } style={ styles.back } name="ios-skip-backward" size={30} color="#fff" />;
     }
 
     let playButtonV;
     if( this.state.playing ){
-      playButtonV = <Icon onPress={ this.togglePlay.bind(this) } style={ styles.play } name="ios-pause" size={50} color="#fff" />;
+      playButtonV = <Icon onPress={ this.togglePlay.bind(this) } style={ styles.play } name="ios-pause" size={30} color="#fff" />;
     } else {
-      playButtonV = <Icon onPress={ this.togglePlay.bind(this) } style={ styles.play } name="ios-play" size={50} color="#fff" />;
+      playButtonV = <Icon onPress={ this.togglePlay.bind(this) } style={ styles.play } name="ios-play" size={30} color="#fff" />;
     }
 
 
@@ -491,7 +491,7 @@ class Player extends Component {
             }}>
 
               { backwardButtonV }
-              { playButton }
+              { playButtonV }
               { forwardButtonV }
 
             </View>
