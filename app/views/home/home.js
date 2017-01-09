@@ -23,7 +23,6 @@ var Menu = require('../menu/menu');
 var HomeSlider = require('../slider/slider');
 var Hot = require('../hot/hot');
 var MostView = require('../mostview/mostview');
-var RefreshInfiniteListView = require('@remobile/react-native-refresh-infinite-listview');
 var Orientation = require('react-native-orientation');
 import ScrollableTabView, {ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import CustomTabBar from './CustomTabBar';

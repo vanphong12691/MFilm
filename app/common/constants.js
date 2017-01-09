@@ -25,3 +25,4 @@ exports.SEARCH_ID = 7;
 exports.SETTING_ID = 8;
 exports.SEEN_ID = 9;
 exports.LIKE_ID = 10;
+exports.SCROLL_ID = 11;

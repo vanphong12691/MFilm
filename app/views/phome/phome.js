@@ -9,7 +9,8 @@ import {
     Image,
     TouchableHighlight,
     RefreshControl,
-    Keyboard
+    Keyboard,
+    ActivityIndicator
 }from 'react-native';
 var HomePresenter = require('../../presenter/home');
 var Global = require('../../common/global');
@@ -19,7 +20,6 @@ var Header = require('../../component/header/index');
 var PageCell = require('../cell/page/index');
 var SideMenu = require('react-native-side-menu');
 var Menu = require('../menu/menu');
-var RefreshInfiniteListView = require('@remobile/react-native-refresh-infinite-listview');
 import Icon from 'react-native-vector-icons/Ionicons';
 var Orientation = require('react-native-orientation');
 class PageHome extends Component
@@ -67,7 +67,7 @@ class PageHome extends Component
         HomePresenter.getHListFilm(url,this).then(responseData=>{
             this.totalPage = responseData.max;
             if(responseData.data.length > 0){
-                this.datas = responseData.data.reverse();
+                this.datas = responseData.data;
               console.log("DATAS", this.datas.length);
                 this.setState({
                     dataSource:this.ds.cloneWithRows(this.datas)
@@ -103,23 +103,38 @@ class PageHome extends Component
                 </View>
 
                  <ListView
-                        refreshControl={
-                         <RefreshControl
-                             refreshing={this.state.refreshing}
-                             onRefresh={this._onRefresh.bind(this)}
-                         />
-                        }
-                        ref="listView" onLayout={this.onListViewLayout.bind(this)}
+                        renderFooter={this.renderFooter.bind(this)}
+                        onEndReached={this.onEndReached.bind(this)}
+                        ref="listView"
                         contentContainerStyle={styles.list}
                         dataSource={this.state.dataSource}
                         renderRow={this._renderRow.bind(this)}
-                        onContentSizeChange={this.onContentSizeChange.bind(this)}
                  />
             </View>
                 </SideMenu>
 
 
         )
+    }
+
+    onEndReached() {
+        if (!this.state.refreshing) {
+            this.setState({refreshing: true});
+            this._onRefresh();
+        }
+    }
+
+    renderFooter() {
+        if (this.state.refreshing) {
+            return (<View style={{
+                padding: 5,
+                right: 0,
+                bottom: 0,
+                left: 0,
+                position: 'absolute',
+                backgroundColor: 'rgba(3, 169, 244,0.3)'
+              }}><ActivityIndicator size={30}  animating = {true}/></View>);
+        }
     }
 
     onMenuSelected(name){
@@ -197,48 +212,20 @@ class PageHome extends Component
     onBackHome(){
         this.props.navigator.pop();
     }
-    onListViewLayout(){
-        var self=this;
-        Global.Utils.measureView(this.refs.listView, function(measureData){
-            self.listViewMaxHeight = measureData.height;
-        });
-    }
-    onContentSizeChange(w, h)
-    {
-        this.contentHeight = h;
-        console.log(this.isRefresh);
-        if (!this.isRefresh) {
-            this.scrollToBottom(this.listViewMaxHeight);
-        }
-    }
-    scrollTo(listViewHeight){
-        this.refs.listView.scrollTo({x: 0, y: listViewHeight, animated: true});
-    }
-
-    scrollToBottom(listViewHeight){
-        if (this.contentHeight > listViewHeight) {
-            this.refs.listView.scrollTo({x: 0, y: this.contentHeight - listViewHeight, animated: true});
-        }
-    }
 
     _onRefresh() {
 
-        this.setState({refreshing: true});
         let url = '?type='+this.props.data.type;
         this.isRefresh = true;
         if(this.page<this.totalPage){
             url +="&page="+(++this.page);
             HomePresenter.getListFilm(url,this).then(responseData=>{
-                    responseData.data = responseData.data.reverse();
                     if(responseData.data.length > 0){
                         for(let i=responseData.data.length-1; i>=0;i--){
-                            this.datas.unshift(responseData.data[i]);
+                            this.datas.push(responseData.data[i]);
                         }
-                        console.log('Data', this.datas.length);
                         this.setState({dataSource:this.ds.cloneWithRows(this.datas)});
                         this.setState({refreshing: false});
-                        console.log(this.listViewMaxHeight);
-                        this.scrollTo((responseData.data.length-1)*260/2);
                     }
                 }).catch(error=>{
                 alert("Không thể kết nối đến máy chủ, vui lòng thử lại sau!");
@@ -262,8 +249,6 @@ class PageHome extends Component
               type: rowData.type
             }
         });
-
-        console.log(rowData);
     }
     _renderRow(rowData: object, sectionID: number, rowID: number){
         return (
