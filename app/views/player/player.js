@@ -12,7 +12,8 @@ import {
   TouchableOpacity,
     TouchableWithoutFeedback,
     ActivityIndicator,
-    AsyncStorage
+    AsyncStorage,
+    TouchableHighlight
 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -523,7 +524,7 @@ class Player extends Component {
 
             </View>
 
-            {this.state.type >= "720p" && <View style={{
+            {(this.state.type == "720p" || this.state.type=="1080p") && <View style={{
               position: 'absolute',
               bottom: 25,
               right: 40,
@@ -566,7 +567,9 @@ class Player extends Component {
               bottom: 10,
               right: 10,
             }}>
-              <Icon style={ {marginLeft: 0} } onPress={this._onPressCollapse.bind(this)} name="md-contract" size={25} color="#fff" />
+              <TouchableHighlight underlayColor="rgba(3, 169, 244,0.1)" style={{paddingLeft: 2, paddingRight: 2}} onPress={this._onPressCollapse.bind(this)}>
+                <Icon name="md-contract" size={25} color="#fff" />
+              </TouchableHighlight>
 
             </View>
           </View>}
@@ -649,8 +652,9 @@ class Player extends Component {
               bottom: 15,
               right: 20,
           }}>
-              <Icon style={ {marginLeft: 0} } onPress={this._onPressExpand.bind(this)} name="md-expand" size={25} color="#fff" />
-
+            <TouchableHighlight underlayColor="rgba(3, 169, 244,0.1)" style={{paddingLeft: 2, paddingRight: 2}} onPress={this._onPressExpand.bind(this)}>
+              <Icon name="md-expand" size={25} color="#fff" />
+            </TouchableHighlight>
             </View>
           <View style={ styles.controls }>
             { backwardButton }

@@ -79,32 +79,47 @@ class Page extends Component
             loading: true
         })
         if(item.i==3){
-            let url ="?order=publish_date&cat_id=56";
-            HomePresenter.getListFilm(url,this).then(responseData=>{
-                this.totalPage = responseData.max;
+            if(this.state.checkRap){
+                this.setState({
+                    loading:false,
+                })
+            }else{
+                let url ="?order=publish_date&cat_id=56";
+                HomePresenter.getListFilm(url,this).then(responseData=>{
+                    this.totalPage = responseData.max;
 
-                if(responseData.data.length > 0){
-                    this.setState({
-                        rap:responseData.data,
-                        loading: false
-                    })
-                }
-            }).catch(error=>{
-                alert('Error change Tabe');
-            });
+                    if(responseData.data.length > 0){
+                        this.setState({
+                            rap:responseData.data,
+                            loading: false,
+                            checkRap: true
+                        })
+                    }
+                }).catch(error=>{
+                    alert('Error change Tabe');
+                });
+            }
+
         }
 
         if(item.i==2){
-            HomePresenter.getMostViewFilm(this).then(responseData=>{
-                if(responseData){
-                    this.setState({
-                        mostView:responseData.data,
-                        loading: false
-                    })
-                }
-            }).catch(error=>{
-                alert('Error change Tabe');
-            });
+            if(this.state.checkMostView){
+                this.setState({
+                    loading: false,
+                })
+            }else{
+                HomePresenter.getMostViewFilm(this).then(responseData=>{
+                    if(responseData){
+                        this.setState({
+                            mostView:responseData.data,
+                            loading: false,
+                            checkMostView: true
+                        })
+                    }
+                }).catch(error=>{
+                    alert('Error change Tabe');
+                });
+            }
         }
     }
 
@@ -145,7 +160,7 @@ class Page extends Component
                                     <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>Phim bộ mới cập nhật</Text></View>
                                     <View style={{backgroundColor: "#2980b9", width: 40, height: 40, justifyContent: 'center', alignItems:'center'}}>
                                         <TouchableHighlight underlayColor="transparent" onPress={this._onPressList.bind(this,0)} >
-                                            <Icon  name="ios-arrow-dropright" size={30} color="#fff" />
+                                            <Icon  name="ios-arrow-dropright"  size={30} color="#fff" />
                                         </TouchableHighlight>
                                     </View>
                                 </View>}
