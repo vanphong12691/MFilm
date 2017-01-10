@@ -22,5 +22,9 @@ module.exports = StyleSheet.create({
     position: 'absolute',
     height: Global.Constants.HEIGHT_SCREEN,
     backgroundColor: '#CFD8DC'
-  }
+  },
+  webView: {
+    backgroundColor: 'white',
+    height: 350,
+  },
 });

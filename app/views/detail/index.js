@@ -18,7 +18,8 @@ import {
     ActivityIndicator,
     TouchableHighlight,
     ScrollView,
-    AsyncStorage
+    AsyncStorage,
+    WebView
 }from 'react-native';
 var styles = require('./index_style');
 var Global = require('../../common/global');
@@ -27,6 +28,7 @@ var HomePresenter = require('../../presenter/home');
 var Header = require('../../component/header/index');
 var ChapperCell = require('../cell/chapper/index');
 import Icon from 'react-native-vector-icons/Ionicons';
+import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
 class HomeCell extends Component {
 
     constructor(props){
@@ -114,6 +116,8 @@ class HomeCell extends Component {
 
     }
     render() {
+        let postUrl =  Global.Domain.DOMAIN+'/facebook.php?url='+this.props.data.href;
+        console.log(postUrl);
         return (
             <View style={{backgroundColor: '#263238', height: Global.Constants.HEIGHT_SCREEN}}>
                 <View style={{height:40, flexDirection:"row"}}>
@@ -124,106 +128,128 @@ class HomeCell extends Component {
                     </View>
                     <View style={{flex: 1}}><Header title={this.props.data.vi}/></View>
                 </View>
-                <ScrollView>
-                    <View style={{height: 300, backgroundColor :'#263238', flexDirection: 'row'}}>
 
-                        <Image style={{width: 180, height: 300}} source={{uri: this.state.information.thumbnailUrl}}></Image>
-                        <View style={{flex: 1, backgroundColor: "#263238", padding: 10, flexDirection:'column'}}>
-                            <Text style={{fontSize: 16,lineHeight: 20, color: 'white', fontWeight:'bold'}} numberOfLines={1} ellipsizeMode={'tail'}>{this.props.data.en}</Text>
+                <ScrollableTabView
+                    renderTabBar={() => <DefaultTabBar
+                        backgroundColor="#607D8B"
+                        activeTextColor="white"
+                        inactiveTextColor="#B0BEC5"
+                        underlineStyle={{
+                            backgroundColor: 'black'
+                        }}
+                        tabStyle={{paddingBottom: 0}}
+                        style={{height:40, borderColor:"black"}}
+                    />}
+                >
 
-                            <Text numberOfLines={1} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#B3E5FC'}}>Đang phát: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20, color: 'white'}}>{this.state.information.showing}</Text>
-                            </Text>
-                            <Text numberOfLines={1} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#B3E5FC'}}>Sắp chiếu: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}}>{this.state.information.preShow}</Text>
-                            </Text>
+                    <ScrollView tabLabel='Thông tin'>
+                        <View style={{height: 300, backgroundColor :'#263238', flexDirection: 'row'}}>
 
-                            <Text numberOfLines={5} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#B3E5FC'}}>Diễn viên: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}}>{this.convertArray(this.state.information.actor)}</Text>
-                            </Text>
-                            <Text numberOfLines={2} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#B3E5FC'}}>Quốc gia: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}}>{this.convertArray(this.state.information.country)}</Text>
-                            </Text>
-                            <Text numberOfLines={1} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#B3E5FC'}}>Thời lượng: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}} >{this.state.information.duration}</Text>
-                            </Text>
-                            <Text numberOfLines={1} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#B3E5FC'}}>Lượt xem: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}} >{this.state.information.view}</Text>
-                            </Text>
-                            <Text numberOfLines={1} ellipsizeMode={'tail'}>
-                                <Text style={{color:'#B3E5FC'}}>Năm SX: </Text>
-                                <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}} >{this.state.information.year}</Text>
-                            </Text>
+                            <Image style={{width: 180, height: 300}} source={{uri: this.state.information.thumbnailUrl}}></Image>
+                            <View style={{flex: 1, backgroundColor: "#263238", padding: 10, flexDirection:'column'}}>
+                                <Text style={{fontSize: 16,lineHeight: 20, color: 'white', fontWeight:'bold'}} numberOfLines={1} ellipsizeMode={'tail'}>{this.props.data.en}</Text>
+
+                                <Text numberOfLines={1} ellipsizeMode={'tail'}>
+                                    <Text style={{color:'#B3E5FC'}}>Đang phát: </Text>
+                                    <Text style={{fontSize: 14, lineHeight: 20, color: 'white'}}>{this.state.information.showing}</Text>
+                                </Text>
+                                <Text numberOfLines={1} ellipsizeMode={'tail'}>
+                                    <Text style={{color:'#B3E5FC'}}>Sắp chiếu: </Text>
+                                    <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}}>{this.state.information.preShow}</Text>
+                                </Text>
+
+                                <Text numberOfLines={5} ellipsizeMode={'tail'}>
+                                    <Text style={{color:'#B3E5FC'}}>Diễn viên: </Text>
+                                    <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}}>{this.convertArray(this.state.information.actor)}</Text>
+                                </Text>
+                                <Text numberOfLines={2} ellipsizeMode={'tail'}>
+                                    <Text style={{color:'#B3E5FC'}}>Quốc gia: </Text>
+                                    <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}}>{this.convertArray(this.state.information.country)}</Text>
+                                </Text>
+                                <Text numberOfLines={1} ellipsizeMode={'tail'}>
+                                    <Text style={{color:'#B3E5FC'}}>Thời lượng: </Text>
+                                    <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}} >{this.state.information.duration}</Text>
+                                </Text>
+                                <Text numberOfLines={1} ellipsizeMode={'tail'}>
+                                    <Text style={{color:'#B3E5FC'}}>Lượt xem: </Text>
+                                    <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}} >{this.state.information.view}</Text>
+                                </Text>
+                                <Text numberOfLines={1} ellipsizeMode={'tail'}>
+                                    <Text style={{color:'#B3E5FC'}}>Năm SX: </Text>
+                                    <Text style={{fontSize: 14, lineHeight: 20,color: 'white'}} >{this.state.information.year}</Text>
+                                </Text>
 
 
 
 
 
-                            <View style={{
-                                position: 'absolute',
-                                bottom:10,
-                                height: 30,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                flexDirection: 'row'
-                            }}>
-                                <View style={{width: 30}}>
-                                    {this.state.isLike && <Icon onPress={this.clickUnlike.bind(this)} name="ios-heart" size={28} color="#E91E63" />}
-                                    {!this.state.isLike && <Icon  onPress={this.clickLike.bind(this)} name="ios-heart-outline" size={28} color="#E91E63" />}
+                                <View style={{
+                                    position: 'absolute',
+                                    bottom:10,
+                                    height: 30,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'row'
+                                }}>
+                                    <View style={{width: 30}}>
+                                        {this.state.isLike && <Icon onPress={this.clickUnlike.bind(this)} name="ios-heart" size={28} color="#E91E63" />}
+                                        {!this.state.isLike && <Icon  onPress={this.clickLike.bind(this)} name="ios-heart-outline" size={28} color="#E91E63" />}
+                                    </View>
+                                    <View style={{width: 100, borderRadius: 5, backgroundColor: '#0D47A1', justifyContent: 'center', alignItems:'center'}}>
+                                        {!this.state.watched && <TouchableHighlight underlayColor="transparent" onPress={!this.state.loading&&this.playFilm.bind(this)}>
+                                            <View>
+                                                <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>{"XEM PHIM"}</Text>
+                                            </View>
+
+                                        </TouchableHighlight>}
+                                        {this.state.watched && <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>{'CHỌN TẬP'}</Text>}
+                                    </View>
+
+
                                 </View>
-                                <View style={{width: 100, borderRadius: 5, backgroundColor: '#0D47A1', justifyContent: 'center', alignItems:'center'}}>
-                                    {!this.state.watched && <TouchableHighlight underlayColor="transparent" onPress={!this.state.loading&&this.playFilm.bind(this)}>
-                                        <View>
-                                            <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>{"XEM PHIM"}</Text>
-                                        </View>
+                            </View>
 
-                                    </TouchableHighlight>}
-                                    {this.state.watched && <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>{'CHỌN TẬP'}</Text>}
-                                </View>
+                        </View>
+                        <View style={{height:40, flexDirection:"row", backgroundColor: "#0288D1"}}>
+                            <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
 
+                                <Icon  name="ios-list" size={30} color="#fff" />
 
                             </View>
+                            <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>LỊCH CHIẾU</Text></View>
                         </View>
+                        <View style={{backgroundColor :'#263238', padding: 10}}>
+                            <Text style={{lineHeight: 20, color: "white", paddingTop: 5, paddingBottom: 5}}>{this.state.information.lc}</Text>
+                        </View>
+                        {this.state.watched && <View style={{flex: 0.20, padding: 1}}>
+                            <ListView
+                                pageSize = {100}
+                                contentContainerStyle={styles.list}
+                                dataSource={this.state.dataSource}
+                                renderRow={this._renderRow.bind(this)}
+                            />
 
-                    </View>
-                    <View style={{height:40, flexDirection:"row", backgroundColor: "#0288D1"}}>
-                        <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
-
+                        </View>
+                        }
+                        <View style={{height:40, flexDirection:"row", backgroundColor: "#0288D1"}}>
+                            <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
                                 <Icon  name="ios-list" size={30} color="#fff" />
-
+                            </View>
+                            <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>NỘI DUNG PHIM</Text></View>
                         </View>
-                        <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>LỊCH CHIẾU</Text></View>
-                    </View>
-                    <View style={{backgroundColor :'#263238', padding: 10}}>
-                        <Text style={{lineHeight: 20, color: "white", paddingTop: 5, paddingBottom: 5}}>{this.state.information.lc}</Text>
-                    </View>
-                    {this.state.watched && <View style={{flex: 0.20, padding: 1}}>
-                        <ListView
-                            pageSize = {100}
-                            contentContainerStyle={styles.list}
-                            dataSource={this.state.dataSource}
-                            renderRow={this._renderRow.bind(this)}
-                        />
-
-                    </View>
-                    }
-                    <View style={{height:40, flexDirection:"row", backgroundColor: "#0288D1"}}>
-                        <View style={{backgroundColor: "#0288D1",width: 40, height: 40, justifyContent: 'center',alignItems:'center'}}>
-                                <Icon  name="ios-list" size={30} color="#fff" />
+                        <View style={{backgroundColor :'#263238', padding: 10}}>
+                            {this.convertToPicture(this.state.information.content)}
                         </View>
-                        <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 16, color:'white'}}>NỘI DUNG PHIM</Text></View>
-                    </View>
-                    <View style={{backgroundColor :'#263238', padding: 10}}>
-                        {this.convertToPicture(this.state.information.content)}
-                    </View>
+                    </ScrollView>
 
-                </ScrollView>
+                    <WebView tabLabel='Bình luận'
+                        ref={"WEBVIEW_REF"}
+                        automaticallyAdjustContentInsets={false}
+                        style={styles.webView}
+                        url={postUrl}
+                    />
+                    <Text tabLabel='Liên quan' style={{color:'white', padding: 10}}>Danh sách phim liên quan</Text>
+                </ScrollableTabView>
                 {this.state.loading&&<View style={styles.centering}>
                     <ActivityIndicator
                         animating = {true}
