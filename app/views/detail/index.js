@@ -265,17 +265,30 @@ class HomeCell extends Component {
         )
     }
     convertArray(data){
-        if(data){
-            let result ='';
-            for(let i =0;i < data.length; i++){
-                result += ", " + data[i].name;
+       let result=[];
+        if(data) {
+            for (let i = 0; i < data.length; i++) {
+                result.push(<Text style={{color:'#64DD17'}} onPress={this.clickText.bind(this,data[i])}>{data[i].name}</Text>);
+                result.push(<Text>, </Text>);
             }
-            return result.substring(2);
+            result.pop();
         }
-        return '';
-
-
+        return result;
     }
+
+    clickText(data,event){
+
+        this.props.navigator.push({
+            id:Global.Constants.H_PAGE_ID,
+            data: {
+                type : data.href,
+                title: data.name
+    }
+        });
+    }
+
+
+
     onBack(){
         this.props.navigator.pop();
     }
