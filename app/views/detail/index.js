@@ -27,6 +27,8 @@ var Constant = require('../../common/constants');
 var HomePresenter = require('../../presenter/home');
 var Header = require('../../component/header/index');
 var ChapperCell = require('../cell/chapper/index');
+var PageCell = require('../cell/page/index');
+var Hot = require('../hot/hot');
 import Icon from 'react-native-vector-icons/Ionicons';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
 class HomeCell extends Component {
@@ -37,7 +39,7 @@ class HomeCell extends Component {
         this.pages = [];
         this.state = {
             dataSource:ds.cloneWithRows(['']),
-            information: [],
+            information: {'related': []},
             watched: false,
             loading: true,
             lastSeen: -1
@@ -197,7 +199,7 @@ class HomeCell extends Component {
                                         {!this.state.isLike && <Icon  onPress={this.clickLike.bind(this)} name="ios-heart-outline" size={28} color="#E91E63" />}
                                     </View>
                                     <View style={{width: 100, borderRadius: 5, backgroundColor: '#0D47A1', justifyContent: 'center', alignItems:'center'}}>
-                                        {!this.state.watched && <TouchableHighlight underlayColor="transparent" onPress={!this.state.loading&&this.playFilm.bind(this)}>
+                                        {!this.state.watched && <TouchableHighlight underlayColor="transparent" onPress={this.playFilm.bind(this)}>
                                             <View>
                                                 <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>{"XEM PHIM"}</Text>
                                             </View>
@@ -249,7 +251,9 @@ class HomeCell extends Component {
                         style={styles.webView}
                         source={{uri: postUrl}}
                     />
-                    <Text tabLabel='Liên quan' style={{color:'white', padding: 10}}>Danh sách phim liên quan</Text>
+                    <View tabLabel='Liên quan'>
+                        <Hot onItemSelected={this.onPressGoDetail.bind(this)} data={this.state.information['related']}></Hot>
+                    </View>
                 </ScrollableTabView>
                 {this.state.loading&&<View style={styles.centering}>
                     <ActivityIndicator
@@ -294,6 +298,9 @@ class HomeCell extends Component {
 
     }
     playFilm(){
+        if(this.state.loading){
+            return;
+        }
         if(!this.checkExists(this.props.data, this.state.seen)){
             let list = this.state.seen;
             list.push({
@@ -395,6 +402,13 @@ class HomeCell extends Component {
         return (
             <ChapperCell data={rowData} current={rowData.page == this.state.lastSeen} onClickCell={this.onClickCell.bind(this, rowData)}/>
         )
+    }
+
+    onPressGoDetail(data){
+        this.props.navigator.push({
+            id:Global.Constants.DETAIL_ID,
+            data: data
+        });
     }
 
     onClickCell(rowData,event) {
