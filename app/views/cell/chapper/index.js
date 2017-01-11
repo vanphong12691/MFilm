@@ -16,10 +16,11 @@ import {
 var styles = require('./index_style');
 var Global = require('../../../common/global');
 
-class HomeCell extends Component {
+class ChapterCell extends Component {
     propTypes:{
         data: Object,
-        onClickCell:React.PropTypes.func
+        onClickCell:React.PropTypes.func,
+        current:React.PropTypes.bool
         };
 
     constructor(props){
@@ -27,12 +28,15 @@ class HomeCell extends Component {
     }
 
     render() {
+
         if(this.props.data){
+            let color = !this.props.current ? '#455A64': 'green';
+            console.log(this.props.current);
             return (
                 <TouchableHighlight onPress={this.props.onClickCell} style={{  margin: 4,
                     height: 25,}}>
                     <View style={styles.row}>
-                        <Text style={{color: '#455A64'}}>{this.props.data['name']}</Text>
+                        <Text style={{color: color}}>{this.props.data['name']}</Text>
                      </View>
                 </TouchableHighlight>
             );
@@ -46,4 +50,4 @@ class HomeCell extends Component {
 
 }
 
-module.exports = HomeCell;
+module.exports = ChapterCell;

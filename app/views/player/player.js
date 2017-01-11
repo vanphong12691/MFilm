@@ -144,7 +144,10 @@ class Player extends Component {
       if(this.checkExitsPage(this.state.pageName, list[index].chapter)){
         let id = this.getIndexPage(this.state.pageName, list[index].chapter);
         if(id>=0){
-          list[index]['chapter'][id].time = this.state.currentTime > 3? this.state.currentTime-3 : this.state.currentTime
+          let temp = list[index]['chapter'][id];
+          temp.time = this.state.currentTime > 3? this.state.currentTime-3 : this.state.currentTime;
+          list[index]['chapter'].splice(id, 1);
+          list[index]['chapter'].push(temp);
         }
 
       }else{

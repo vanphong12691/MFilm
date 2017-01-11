@@ -40,10 +40,11 @@ class HomeCell extends Component {
             information: [],
             watched: false,
             loading: true,
+            lastSeen: -1
         }
     }
     propTypes:{
-        data:Object,
+        data: Object,
     }
     componentDidMount(){
         HomePresenter.getDetailFilm(this.props.data.href,this).then(responseData=>{
@@ -246,7 +247,7 @@ class HomeCell extends Component {
                         ref={"WEBVIEW_REF"}
                         automaticallyAdjustContentInsets={false}
                         style={styles.webView}
-                        url={postUrl}
+                        source={{uri: postUrl}}
                     />
                     <Text tabLabel='Liên quan' style={{color:'white', padding: 10}}>Danh sách phim liên quan</Text>
                 </ScrollableTabView>
@@ -315,13 +316,22 @@ class HomeCell extends Component {
                 loading: true,
             })
             HomePresenter.getChapperFilm(this.state.information.url,this).then(responseData=>{
+                let index  = this.getIndexList(this.props.data,seen);
+                let lastSeen = -1;
+                let length = seen[index]['chapter'].length;
+                if(index>=0 && length > 0){
+                    lastSeen = seen[index]['chapter'][length-1].page;
+                }
                 if(responseData.length > 0){
                     this.pages = responseData;
                     this.setState({
                         dataSource:this.state.dataSource.cloneWithRows(responseData),
                         watched: true,
                         loading: false,
+                        lastSeen: lastSeen
                     })
+
+
                 }
             }).catch(error=>{
                 alert("Không thể kết nối đến máy chủ, vui lòng thử lại sau!");
@@ -383,7 +393,7 @@ class HomeCell extends Component {
     }
     _renderRow(rowData: object, sectionID: number, rowID: number){
         return (
-            <ChapperCell data={rowData} onClickCell={this.onClickCell.bind(this, rowData)}/>
+            <ChapperCell data={rowData} current={rowData.page == this.state.lastSeen} onClickCell={this.onClickCell.bind(this, rowData)}/>
         )
     }
 
