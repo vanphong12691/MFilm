@@ -89,3 +89,14 @@ export function getMostViewFilm(component){
             .catch(reject);
     });
 }
+
+
+export function getSuggestFilm(url, component){
+    return new Promise(function(resolve,reject){
+        Global.NetworkHelper.requestGetApi(Global.DefineApi.MOST_SUGGEST_FILM_API+url,component)
+            .then((responseData)=>{
+                resolve(responseData);
+            })
+            .catch(reject);
+    });
+}

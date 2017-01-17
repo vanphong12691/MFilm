@@ -133,6 +133,7 @@ class HomeCell extends Component {
                 </View>
 
                 <ScrollableTabView
+                    locked = {true}
                     renderTabBar={() => <DefaultTabBar
                         backgroundColor="#607D8B"
                         activeTextColor="white"
@@ -283,7 +284,7 @@ class HomeCell extends Component {
             data: {
                 type : data.href,
                 title: data.name
-    }
+            }
         });
     }
 

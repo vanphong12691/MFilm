@@ -11,3 +11,4 @@ exports.CHAPPER_FILM_API = domain.DOMAIN+"/part.php";
 exports.CATEROGRY_FILM_API = domain.DOMAIN+"/category.php";
 exports.HOME_API = domain.DOMAIN+"/home.php";
 exports.MOST_VIEW_FILM_API = domain.DOMAIN+"/mostview.php";
+exports.MOST_SUGGEST_FILM_API = domain.DOMAIN+"/suggest.php";
